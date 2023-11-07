@@ -1,0 +1,140 @@
+//Date of Creation
+//@Author: Agrippina Mwangi
+//Task Description: HCTMC System model 
+
+ctmc
+
+//Creating variables from Params I and Params II
+//For Params I
+const double a = 0.0057;   //controller failure rate
+const double b = 0.00285;  //switch failure rate
+const double c = 0.02778;     //controller failure detection rate
+const double d = 0.02778;     //switch migration rate
+const double e = 0.02;        //controller repair rate
+const double f = 0.06;        //switch failure detection rate
+const double g = 0.02;        //switch repair rate
+const double h = 0.9;      //probability of successful controller failure detection
+const double i = 0.95;     //probability of successful switch migration
+const double j = 0.9;      //probability of successful switch failure detection
+const double k = 0.85;     //probability of successful PCEP trigger
+const double m = 0.89;     //probability of redetection of switch failure
+const double n = 0.89;     //probability of redetection of controller failure
+const double p = 3.5;      //repair rate scale from failed state to full operation
+
+//For Params II
+const double ax = 0.0012;   //controller failure rate
+const double bx = 0.00742;  //switch failure rate
+const double cx = 0.04166;    //controller failure detection rate
+const double dx = 0.04166;     //switch migration rate
+const double ex = 0.01;        //controller repair rate
+const double fx = 0.02;        //switch failure detection rate
+const double gx = 0.01;        //switch repair rate
+const double hx = 0.67;      //probability of successful controller failure detection
+const double ix = 0.75;     //probability of successful switch migration
+const double jx = 0.65;      //probability of successful switch failure detection
+const double kx = 0.65;     //probability of successful PCEP trigger
+const double mx = 0.76;     //probability of redetection of switch failure
+const double nx = 0.76;     //probability of redetection of controller failure
+const double px = 3.5;      //repair rate scale from failed state to full operation
+
+
+
+// Transition probability variables for module W1 (to be filled in with values)
+const double p_W1_to_detc =h;      // Transition from W1 to detc
+const double p_detc_to_migs = d;    // Transition from detc to migs
+const double p_migs_to_W2 = i;      // Transition from migs to W2
+
+const double p_detc_to_fdetc =c;   // Transition from detc to fdetc
+const double p_fdetc_to_W1 = n;     // Transition from fdetc back to W1
+
+const double p_W1_to_dets = j;      // Transition from W1 to dets
+const double p_dets_to_fdets = f;   // Transition from dets to fdets
+const double p_fdets_to_W1 = m;     // Transition from fdets back to W1
+
+const double p_dets_to_W3 = b;      // Transition from dets to W3
+
+// Additional transition probability variables for module W2 (to be filled in with values)
+const double p_W2_to_W1 = e;        // Transition from W2 to W1
+const double p_W2_to_detc = h;      // Transition from W2 to detc
+const double p_detc_to_fdetc_W2 = c; // Transition from detc to fdetc when in W2
+const double p_fdetc_to_W2 = n;     // Transition from fdetc back to W2
+const double p_detc_to_migs_Fail =a; // Transition from detc to migs leading to Fail
+
+// Transition probability variables for module W3 (to be filled in with values)
+const double p_W3_to_PCEP = k; // Transition from W3 to PCEP
+const double p_W3_to_W1 = g;   // Transition from W3 to W1
+
+// Transition probability variable for module F (to be filled in with values)
+const double p_F_to_W1 = p*e; // Transition from F to W1
+
+// Define the state space for the W1 module
+global W1 : [0..6] init 0;  // States are: 0 for W1, 1 for detc, 2 for migs, 3 for fdetc, 4 for dets, 5 for fdets, 6 for W3
+
+// Define the state space for the W2 module
+global W2 : [0..4] init 0;  // States are: 0 for W2, 1 for detc, 2 for fdetc, 3 for migs, 4 for Fail
+
+// Define the state space for the W3 module
+global W3 : [0..2] init 0;  // States are: 0 for W3, 1 for PCEP, 2 for W1
+
+// Define the state space for the F module
+global Fail : [0..1] init 0;  // States are: 0 for F, 1 for W1
+
+
+
+// W1 transitions module
+module W1_module
+
+    // From W1 to detc
+    [] W1=0 -> p_W1_to_detc : (W1'=1);
+
+    // From detc to migs, then to W2
+    [] W1=1 -> p_detc_to_migs : (W1'=2);
+    [] W1=2 -> p_migs_to_W2 : (W1'=0); // Assuming W2 is handled by another module and resets W1
+
+    // From detc to fdetc, then back to W1
+    [] W1=1 -> p_detc_to_fdetc : (W1'=3);
+    [] W1=3 -> p_fdetc_to_W1 : (W1'=0);
+
+    // From W1 to dets, then to W3
+    [] W1=0 -> p_W1_to_dets : (W1'=4);
+    [] W1=4 -> p_dets_to_W3 : (W1'=6); // Assuming W3 is handled by another module and resets W1
+
+    // From dets to fdets, then back to W1
+    [] W1=4 -> p_dets_to_fdets : (W1'=5);
+    [] W1=5 -> p_fdets_to_W1 : (W1'=0);
+
+endmodule
+
+
+// Module for W2 transitions
+module W2_module
+
+    // Transitions from W2
+    [] W2=0 -> p_W2_to_W1 : (W2'=0) + p_W2_to_detc : (W2'=1);
+
+    // Transitions from detc to fdetc and back to W2
+    [] W2=1 -> p_detc_to_fdetc_W2 : (W2'=2);
+    [] W2=2 -> p_fdetc_to_W2 : (W2'=0);
+
+    // Transition from detc to migs leading to Fail
+    [] W2=1 -> p_detc_to_migs_Fail : (W2'=4);
+
+endmodule
+
+
+
+// Module for W3 transitions
+module W3_module
+
+    // States and transitions for W3
+    [] W3=0 -> p_W3_to_PCEP : (W3'=1) + p_W3_to_W1 : (W3'=2);
+
+endmodule
+
+// Module for F transitions
+module F_module
+
+    // Transition from F to W1
+    [] Fail=0 -> p_F_to_W1 : (Fail'=1);
+
+endmodule
