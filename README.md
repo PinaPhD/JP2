@@ -28,14 +28,14 @@ Setup Guideline for the SDN System Model
 PART ONE: SETTING UP THE CONTROLLER CLUSTER - ODL ARGON (ver.18.0)
 ---
 
-sudo apt-get -y update && sudo apt-get -y upgrade
-sudo apt-get -y install unzip
-sudo apt-get -y install openjdk-17-jre OR sudo apt install openjdk-17-jdk
-sudo update-alternatives --config java
-ls -l /etc/alternatives/java
-echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> ~/.bashrc
-source ~/.bashrc
-echo $JAVA_HOME
+- sudo apt-get -y update && sudo apt-get -y upgrade
+- sudo apt-get -y install unzip
+- sudo apt-get -y install openjdk-17-jre OR sudo apt install openjdk-17-jdk
+- sudo update-alternatives --config java
+- ls -l /etc/alternatives/java
+- echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> ~/.bashrc
+- source ~/.bashrc
+- echo $JAVA_HOME
 
 ---
 Go to the official OpenDaylight Website and copy the link to Argon (https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.18.2/karaf-0.18.2.tar.gz)
