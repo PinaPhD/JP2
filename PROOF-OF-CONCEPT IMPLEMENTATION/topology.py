@@ -84,7 +84,7 @@ class SDN_Enabled_IoT_Edge_Network(Topo):
                 self.addLink(fd8,fd9)
                 self.addLink(fd1,fd2)
 
-                #Part 3: The Access layer FD links - OFFSHORE WIND FARM DIGITAL SUBSTATION
+                #Part 3: The Access layer FD links - OFFSHORE WIND FARM PICO DATA CENTER
                 info('Linking the access layer forwarding devices with their attached nodes or hosts ... \n\n')
                 self.addLink(fd1,mu1)
                 self.addLink(fd1,mu2)
@@ -94,7 +94,6 @@ class SDN_Enabled_IoT_Edge_Network(Topo):
                 self.addLink(fd2,ldaq2)
                 self.addLink(fd2,ldaq3)
 
-                #Part 4: The Access layer FD links - ONSHORE CONTROL ROOM
                 self.addLink(fd7,VPAC1)
                 self.addLink(fd7,VPAC2)
                 self.addLink(fd7,VPAC3)
