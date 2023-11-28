@@ -13,11 +13,11 @@ import time
 import os
 
 
-class AWF_digital_substation_network(Topo):
+class SDN_Enabled_IoT_Edge_Network(Topo):
 
         def build(self):
                 #Defining the 9 forwarding devices and the gateway router
-                info('Adding switches and routers to the AWF Digital substation communication selfwork ... \n\n')
+                info('Adding switches and routers to the SDN-enabled IoT-Edge Network for next generation offshore wind farms \n\n')
                 fd1 = self.addSwitch('FD1')
                 fd2 = self.addSwitch('FD2')
                 fd3 = self.addSwitch('FD3')
@@ -40,38 +40,33 @@ class AWF_digital_substation_network(Topo):
                 mu2 = self.addHost('MU2')
                 mu3 = self.addHost('MU3')
 
-                mu4 = self.addHost('MU4')
-                mu5 = self.addHost('MU5')
-                mu6 = self.addHost('MU6')
+                ldaq1 = self.addHost('LDAQ1')
+                ldaq2 = self.addHost('LDAQ2')
+                ldaq3 = self.addHost('LDAQ3')
 
                 #Protection and Fault Recording Equipment (PR and FR Hosts)
                 info('Adding Protection and Fault recording equipment to the Onshore Control room ... \n\n')
-                pr2 = self.addHost('PR2')
-                pr3 = self.addHost('PR3')
+                ECP1 = self.addHost('ECP1')
+                ECP2 = self.addHost('ECP2')
 
-                vied1 = self.addHost('VIED1')
-                vied2 = self.addHost('VIED2')
-                vied3 = self.addHost('VIED3')
-                vied4 = self.addHost('VIED4')
-                vied5 = self.addHost('VIED5')
+                VPAC1 = self.addHost('VPAC1')
+                VPAC2 = self.addHost('VPAC2')
+                VPAC3 = self.addHost('VPAC3')
+                VPAC4 = self.addHost('VPAC4')
+                VPAC5 = self.addHost('VPAC5')
 
-                pqr1 = self.addHost('PQR1')
-                pqr2 = self.addHost('PQR2')
-                rtu = self.addHost('RTU')
+                ECP3 = self.addHost('ECP3')
+                ECP4 = self.addHost('ECP4')
+                ECP5 = self.addHost('ECP5')
 
-                fr1 = self.addHost('FR1')
-                fr2 = self.addHost('FR2')
+                ECP6 = self.addHost('ECP6')
+                ECP7 = self.addHost('ECP7')
 
 
                 """
                 Adding hosts to the forwarding devices and linking the routers
                 """
 
-                #Part 1: The IT/OT links between routers and distribution level FDs
-                #info('Linking the OT Gateway to the ISP and Enterprise selfwork (IT) ... \n\n')
-                #self.addLink(RG1,RG2,bw=20, delay = '0.01ms')   #Linking gateway to ISP router on a 2gbps optical fiber link
-                #self.addLink(RG2,RG3,bw=15, delay = '0.01ms')   #Linking ISP to Enterprise selfwork router on a 2gbps optical fiber link
-        #self.addLink(fd9,RG1) #Linking the OT network to the Internet (via a RG1 gateway)
 
         #Part 2: The Distribution layer FD links
                 info('Linking the distribution layer forwarding devices ... \n\n')
@@ -95,25 +90,25 @@ class AWF_digital_substation_network(Topo):
                 self.addLink(fd1,mu2)
                 self.addLink(fd1,mu3)
 
-                self.addLink(fd2,mu4)
-                self.addLink(fd2,mu5)
-                self.addLink(fd2,mu6)
+                self.addLink(fd2,ldaq1)
+                self.addLink(fd2,ldaq2)
+                self.addLink(fd2,ldaq3)
 
                 #Part 4: The Access layer FD links - ONSHORE CONTROL ROOM
-                self.addLink(fd7,vied1)
-                self.addLink(fd7,vied2)
-                self.addLink(fd7,pr2)
-                self.addLink(fd7,pr3)
+                self.addLink(fd7,VPAC1)
+                self.addLink(fd7,VPAC2)
+                self.addLink(fd7,VPAC3)
+                self.addLink(fd7,VPAC4)
 
-                self.addLink(fd8,vied3)
-                self.addLink(fd8,vied4)
-                self.addLink(fd8,vied5)
-                self.addLink(fd8,pqr1)
-                self.addLink(fd8,pqr2)
+                self.addLink(fd8,VPAC5)
+                self.addLink(fd8,ECP1)
+                self.addLink(fd8,ECP2)
+                self.addLink(fd8,ECP3)
+                self.addLink(fd8,ECP4)
 
                 info("Linking the gateway to the protection and fault recording devices in the OT onshore control room ... \n\n")
-                self.addLink(fd9,fr1)
-                self.addLink(fd9,rtu)
-                self.addLink(fd9,fr2)
+                self.addLink(fd9,ECP5)
+                self.addLink(fd9,ECP6)
+                self.addLink(fd9,ECP7)
 
-topos = {'awfnet': AWF_digital_substation_network}
+topos = {'sdniotedge': SDN_Enabled_IoT_Edge_Network}
