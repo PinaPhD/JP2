@@ -1,0 +1,56 @@
+sudo systemctl status mosquitto
+
+#Test the installation
+mosquitto_sub -t testtopic   #Subscriber
+mosquitto_pub -t testtopic -m "Hello, MQTT"   #Publisher
+
+#Running the Eclipse Paho MQTT Client
+pip install paho-mqtt
+
+#Publisher Script
+import paho.mqtt.client as mqtt
+# Define the MQTT broker address and port
+broker_address = "localhost"
+broker_port = 1883
+
+# Create an MQTT client instance
+client = mqtt.Client("publisher")
+
+# Connect to the broker
+client.connect(broker_address, broker_port)
+
+# Publish a message to a topic
+topic = "testtopic"
+message = "Hello, MQTT from Paho!"
+client.publish(topic, message)
+
+# Disconnect from the broker
+client.disconnect()
+
+
+#Subscriber Script
+import paho.mqtt.client as mqtt
+
+# Define the MQTT broker address and port
+broker_address = "localhost"
+broker_port = 1883
+
+# Callback when a message is received
+def on_message(client, userdata, message):
+    print(f"Received message '{message.payload.decode()}' on topic '{message.topic}'")
+
+# Create an MQTT client instance
+client = mqtt.Client("subscriber")
+
+# Set the message callback
+client.on_message = on_message
+
+# Connect to the broker
+client.connect(broker_address, broker_port)
+
+# Subscribe to a topic
+topic = "testtopic"
+client.subscribe(topic)
+
+# Loop to receive messages
+client.loop_forever()
