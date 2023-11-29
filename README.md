@@ -1,13 +1,9 @@
 
 
----
-- @Author: Agrippina Mwangi
-- @Task Description: Sensitivity Analysis
----
+### Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms
 
----
-METHODOLOGY
----
+#### METHODOLOGY
+
 
 - On a physical server, three VMs were instantiated such that VM-A hosted $C_1$, VM-B hosted $C_2$, and VM-C hosted $C_3$. The OpenDaylight SDN controller (ODL SDNC) is used in this setup. ODL SDNC has a distributed-flat architecture. This implies that the SDN cluster comprises SDN controllers interacting as peers, unlike the hierarchical architecture where some SDN controllers are masters overseeing agent (or sub-level) controllers.
    
@@ -19,14 +15,14 @@ METHODOLOGY
 
 
 
----
-Setup Guideline for the SDN System Model
----
+
+#### Setup Guideline for the SDN System Model
 
 
----
-PART ONE: SETTING UP THE CONTROLLER CLUSTER - ODL ARGON (ver.18.0)
----
+
+
+#### PART ONE: SETTING UP THE CONTROLLER CLUSTER - ODL ARGON (ver.18.0)
+
 
 - sudo apt-get -y update && sudo apt-get -y upgrade
 - sudo apt-get -y install unzip
