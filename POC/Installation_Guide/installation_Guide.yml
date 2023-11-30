@@ -1,0 +1,9 @@
+
+#### Typical user features
+---
+* odl-openflowplugin-flow-services-rest               #OF plugin with REST API
+* odl-openflowplugin-flow-app-table-miss-enforcer     #Adds default flow to controller
+* odl-openflowplugin-nxm-extensions                   #NICIRA extensions for OVS
+* odl-openflowplugin-drop-test                        #Test application for pushing flows on packet-in
+* odl-openflowplugin-app-bulk-o-matic                 #Test application for pushing bulk flows 
+
