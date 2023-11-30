@@ -4,6 +4,9 @@
 #### ABSTRACT
 
 
+
+---
+
 #### METHODOLOGY
 - On a physical server, three VMs were instantiated such that VM-A hosted $C_1$, VM-B hosted $C_2$, and VM-C hosted $C_3$. The OpenDaylight SDN controller (ODL SDNC) is used in this setup. ODL SDNC has a distributed-flat architecture. This implies that the SDN cluster comprises SDN controllers interacting as peers, unlike the hierarchical architecture where some SDN controllers are masters overseeing agent (or sub-level) controllers.
    
@@ -59,4 +62,33 @@ feature:install
 - cd containernet
 - sudo ansible-playbook -i "localhost," -c local install.yml
 - sudo python3 examples/containernet_example.py
+
+#### Cite our Work
+
+```bibtex
+@article{JP22024,
+  title={Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms},
+  author={Mwangi et al., },
+  journal={IEEE Transactions of Industrial Informatics},
+  year={2024},
+  ...
+}
+
+@inproceedings{mwangi2023system,
+  title={A system-based framework for optimal sensor placement in smart grids},
+  author={Mwangi, Agrippina and Sundsgaard, Konrad and Vilaplana, Jose Angel Leiva and Viler{\'a}, Kaio Vin{\'\i}cius and Yang, Guangya},
+  booktitle={2023 IEEE Belgrade PowerTech},
+  pages={1--6},
+  year={2023},
+  organization={IEEE}
+}
+
+@inproceedings{kabbara2023specifications,
+  title={Specifications of a Simulation Framework for Virtualized Intelligent Electronic Devices in Smart Grids Covering Networking and Security Requirements},
+  author={Kabbara, Nadine and Mwangi, Agrippina and Gibescu, Madeleine and Abedi, Ali and Stefanov, Alexandru and Palensky, Peter},
+  booktitle={2023 IEEE Belgrade PowerTech},
+  pages={1--6},
+  year={2023},
+  organization={IEEE}
+}
 
