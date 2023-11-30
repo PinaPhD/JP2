@@ -1,0 +1,55 @@
+
+version: "3.3"
+services: 
+  ied1_htb:
+    image: open_report61850:v1 
+    container_name: IED1_HTB
+    command: "/srv/libiec61850_report 102 /cfg/arkens_htb.cfg "
+    volumes:
+      - /home/nadine_k/Documents/Docker61850/open_server61850/demo_cfg/cfg_report_goose:/cfg
+    networks:
+      macvlan1:
+        ipv4_address: 192.168.0.60
+    privileged: true
+    
+
+  ied2_tg:
+    image: open_server_client61850:v1  
+    container_name: IED2_TG
+    depends_on:
+      - ied1_htb
+    command: "/srv/libiec61850_server_client eth0 102 /cfg/arkens_tg.cfg /cfg/arkens_tg.ext 192.168.0.60 102 01"
+    volumes:
+      - /home/nadine_k/Documents/Docker61850/open_server61850/demo_cfg/cfg_report_goose:/cfg
+    networks:
+      macvlan1:
+        ipv4_address: 192.168.0.61
+    privileged: true
+
+
+  ied3_hta:
+      image: open_server61850:v1   
+      container_name: IED3_HTA
+      command: "/srv/libiec61850_server eth0 102 /cfg/arkens_hta.cfg /cfg/arkens_hta.ext"
+      volumes:
+        - /home/nadine_k/Documents/Docker61850/open_server61850/demo_cfg/cfg_report_goose:/cfg
+      depends_on:
+        - ied1_htb
+      networks:
+        macvlan1:
+          ipv4_address: 192.168.0.62
+      privileged: true
+
+
+networks:
+  macvlan1:
+    driver: macvlan
+    driver_opts:
+      parent: wlp0s20f3
+    ipam:
+      driver: default
+      config:
+          -
+            subnet: 192.168.0.0/24
+            
+           
