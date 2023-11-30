@@ -13,6 +13,7 @@
 
 `sudo python3 containernet_3ieds_mms_goose.py`
 
+`sudo docker load -i *image-name*`
 
 `sudo docker run -it -v /mnt/images:/mnt --net container:mn.d2 nicolaka/netshoot`
 
