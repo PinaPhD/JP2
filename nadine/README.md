@@ -8,7 +8,7 @@
 
 `sudo ansible-playbook -i "localhost," -c local containernet/ansible/install.yml`
 
-## to mount shared file between vm and host
+% to mount shared file between vm and host
 `sudo mount -t virtiofs mount /mnt/images`
 
 `sudo python3 containernet_3ieds_mms_goose.py`
