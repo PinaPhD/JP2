@@ -1,5 +1,5 @@
 
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 from mininet.net import Mininet
 from mininet.node import Node, Controller, OVSSwitch, OVSKernelSwitch, Host
@@ -68,7 +68,7 @@ class SDN_Enabled_IoT_Edge_Network(Topo):
                 """
 
 
-        #Part 2: The Distribution layer FD links
+                #Part 2: The Distribution layer FD links
                 info('Linking the distribution layer forwarding devices ... \n\n')
                 self.addLink(fd4,fd3)    #LC-LC fiber patch cords at 1Gbps duplex (ODS)
                 self.addLink(fd4,fd5)   #A single model subsea optical fiber cable on 2gbps
