@@ -12,6 +12,13 @@ The ECP and vPAC nodes send back actuation signals to _(1,...,n)_ actuators.
 These data samples and actuation signals are sent through _(1,...,n)_ OpenFlow-enabled 
 switches. 
 
-_
+For this model,
+- 10 sensors
+- 10 ECP nodes
+- 10 vPAC nodes
+- 10 actuators
+- 9 switches
+- 3 controllers
+
 
 #### The Experimental Results
