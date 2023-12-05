@@ -48,11 +48,11 @@ cd karaf-0.18.2/bin/
 Install the relevant features: 
 
 ```bash
-feature:install 
-odl-restconf-all 
-odl-openflowplugin-app-topology 
-odl-openflowplugin-app-topology-manager 
-odl-mdsal-apidocs
+feature:install odl-openflowplugin-app-topology odl-openflowplugin-app-topology-manager odl-openflowplugin-drop-test odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-nxm-extensions
+
+feature:install odl-restconf odl-restconf-all odl-mdsal-model-odl-l2-types odl-mdsal-apidocs
+ odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-nxm-extensions
+
 ```
 
 
