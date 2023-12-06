@@ -1,0 +1,38 @@
+  
+#### Typical user features
+---
+* odl-openflowplugin-flow-services-rest               #OF plugin with REST API
+* odl-openflowplugin-flow-app-table-miss-enforcer     #Adds default flow to controller
+* odl-openflowplugin-nxm-extensions                   #NICIRA extensions for OVS
+* odl-openflowplugin-drop-test                        #Test application for pushing flows on packet-in
+* odl-openflowplugin-app-bulk-o-matic                 #Test application for pushing bulk flows 
+
+###### Updating the netplan configurations
+```bash
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 192.168.1.10/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+``` 
+
+---
+###### Install these features
+---
+
+```bash
+feature:install odl-dluxapps-nodes odl-dluxapps-yangui odl-dluxapps-yangman odl-dluxapps-topology odl-dluxapps-yangutils odl-dluxapps-applications odl-dluxapps-yangvisualizer
+
+feature:install odl-l2switch-switch-ui odl-restconf-all odl-mdsal-apidocs
+
+feature:install odl-l2switch-switch-ui
+
+feature:install odl-openflowplugin-drop-test odl-openflowplugin-nxm-extensions odl-openflowplugin-onf-extensions odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-lldp-speaker odl-openflowplugin-app-notifications odl-openflowplugin-app-southbound-cli odl-openflowplugin-flow-services-rest odl-openflowplugin-app-topology-manager odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-app-forwardingrules-sync odl-openflowplugin-app-topology-lldp-discovery
+
+```
