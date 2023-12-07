@@ -1,0 +1,101 @@
+//@Author: Agrippina Mwangi
+//Task Description: Investigating the dependability of SDN-enabled IoT-Edge Networks for next-generation offshore wind farms
+
+ctmc
+
+// Constants for the number of controllers and switches
+const int numControllers = 3;
+const int numSwitches = 9;
+
+//Normalized by the second - For Params I
+const double y2s = (365.25*24*60*60);    //Normalizing factor -From year to seconds
+const double h2s = (60*60);              //Normalizing factor -From year to seconds
+
+//Failure Rates
+const double lambdaC= 1/50*y2s;           //controller failure rate
+const double lambdaS = 1/25*y2s;          //switch failure rate
+const double deltaC = 1/3600*h2s;          //controller failure detection rate
+
+//Repair Rates
+const double muC = 1/2*h2s;                //controller repair rate
+const double muS = 1/2*h2s;                //switch repair rate
+
+//Time-bound events
+const double lambdaM = 1/3600;         //switch migration rate -detC to migS jump rate
+const double lambdaDS = 1/360000;        //switch failure detection rate
+
+//mid-transition rates
+const double dc = 1/11*y2s; 		// W1 to detC jump rate
+const double ss = 1/3*y2s;                // migS to W2 jump rate
+const double alphaS = 1/4*y2s;            // fdetS to W1 jump rate
+const double deltaS = 1/2*y2s;            // detS to fdetS jump rate
+const double alphaC = 1/y2s;            //fdetC to W1 jump rate
+
+
+// Module for controllers
+module controllers
+
+  controller1 : [0..1] init 1;  //1- Ok, 0- Failed
+  controller2 : [0..1] init 1;
+  controller3 : [0..1] init 1;
+
+endmodule
+
+// Module for switches
+module switches
+
+  switch1 : [0..1] init 1;   //1- Ok, 0- Failed
+  switch2 : [0..1] init 1;
+  switch3 : [0..1] init 1;
+  switch4 : [0..1] init 1;
+  switch5 : [0..1] init 1;
+  switch6 : [0..1] init 1;
+  switch7 : [0..1] init 1;
+  switch8 : [0..1] init 1;
+  switch9 : [0..1] init 1;
+
+
+endmodule
+
+// SDN-enabled IoT-Edge Network States based on the proposed Markov Chain
+module sdniotedgenet
+
+  state : [0..8] init 8; //States description W1=8,W2=7,W3=6,detC=5,fdetC=4,detS=3,fdetS=2,migS=1,F=0
+	
+//From W1 to W2:
+
+  // Transition from W1 to detC when a controller fails
+  [controller_fails] (state=8 & (controller1=0 | controller2=0 | controller3=0)) -> dc : (state'=5);
+  // Transition from detC to MigS or fdetC
+  [mig_dataplane] state=5 -> lambdaM : (state'=1);
+  // Transition from MigS to W2
+  [successful_migration] state=1 -> ss : (state'=7);
+  //fails to detect the failed controller
+  [fail_detC] state=5 -> deltaC : (state'=4);
+  //Trigger a liveness probe on the current controller state
+  [liveness_probe] (state=4) -> alphaC : (state'=5); 
+  
+//From W2 to W1 :
+   // Transition from W2 to detC when a controller fails
+  [controller_fails] (state=7 & (controller1=0 | controller2=0 | controller3=0)) -> dc : (state'=5);
+  // Transition from W2's detC to MigS the
+  [mig_dataplane] (state=5 & (controller1=0 & controller2=0 | controller1=0&controller3=0 | controller2=0&controller3=0)) -> lambdaM : (state'=1);
+  //From MigS in the W2 space moves to Failed state with only 1 active controller
+  [net_fail] (state=1) -> lambdaC : (state'=0);
+
+//From W1 to W3:
+  // Transitions involving switch failures
+  [switch_fails] state=8 & ((switch1=0 | switch2=0 |switch3=0) & (switch4=0 |switch5=0 |switch6=0 ) & (switch7=0 |switch8=0 | switch9=0)) -> (state'=3);
+  [switch_fails] state=7 & ((switch1=0 | switch2=0 |switch3=0) & (switch4=0 |switch5=0 |switch6=0 ) & (switch7=0 |switch8=0 | switch9=0)) -> (state'=3);
+  //Failure to successfully detect switch failure: Resend another "OFPT-FEATURES-REQUEST" or "OFPT-HELLO"
+  [fail_detS] (state=3) -> deltaS : (state'=3);
+  //Successful detS leads to state W3
+  [] (state=3) -> lambdaS : (state'=6);
+
+
+//Repairing switches and controllers to move back to state W1 
+  [repair_controller] state=0 -> muC : (state'=8);
+  [repair_switch] state=6 -> muS : (state'=8);
+  [repair_controller] state=7 -> muC : (state'=8); 
+
+endmodule
