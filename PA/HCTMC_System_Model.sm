@@ -49,8 +49,8 @@ module controller
 	[controller_fails] c>1 -> c*lambdaC : (c'=c-1);          //When a single controller fails 
 endmodule
 
-module sdniotedgenet
-	//Defining the working states and the transition jump rates for the control plane cluster
+module controlplane
+	//Defining the working states and the transition jump rates for the SDN IoT-Edge Network
 	// 3 - Working state, 2 - Detect Controller Failure (detC), 1 - fail to detect controller failure, 0 -Failed state
 	cp : [0..3] init 3;    	   		//Start from the working state
 	
@@ -59,34 +59,59 @@ module sdniotedgenet
 	//Sends another HBR to confirm if the controller is still active
 	[trigger_logs] (cp=1 & c>MIN_CONTROLLERS) -> alphaC : (cp'=3);      
 	[fail] (cp=1 & c>MIN_CONTROLLERS) | (cp=1 & c=MIN_CONTROLLERS) | (sw>MIN_SWITCHES)-> lambdaC : (cp' = 0); 
-	// move to failed state and migrate the switches        
-	[migS] (cp=2 & c> MIN_CONTROLLERS & sw >=MIN_SWITCHES) -> lambdaM ;
 	//repairing the controller (Reboot or Migrate VM)
 	[repair] (cp=0 & c>MIN_CONTROLLERS) -> muC : (cp'=3);         
 
 endmodule
 
-//Using formula to define the different states of the system (Figure 4)
+module net
+	cd : [0..3] init 3; //3-W1, 2-W2, 1-W3, 0- F
+	 // Transition from cd=3 (F) to cd=2 (W3) through detection of controller failure and then failing to detect controller failure
+        [detC] (cd=3) & (cp>0 & c>MIN_CONTROLLERS) -> dc : (cd'=2); // Transition to detC state in sdniotedgenet and W3 in cd_module
+        [fdetC] (cd=2) & (cp=2 & c>MIN_CONTROLLERS) -> deltaC : (cd'=3); // Transition to fdetC state in sdniotedgenet and back to F in cd_module
+
+    	// Transition from cd=3 (F) to cd=2 (W3) through detection of controller failure and then to a failed state
+        [detC] (cd=3) & (cp>0 & c>MIN_CONTROLLERS) -> dc : (cd'=2); // Same as above
+        [fail] (cd=2) & ((cp=1 & c>MIN_CONTROLLERS) | (cp=1 & c=MIN_CONTROLLERS) | (sw>MIN_SWITCHES)) -> lambdaC : (cd'=1); // Transition to fail state in sdniotedgenet and W2 in cd_module
+
+
+endmodule
 
 //Failed State (F)
-formula failed = true ;
+formula failed = (cp=0) | (cd=0) ;
 
 //Degraded State(D)
-formula degraded = true ;
+formula degraded = (cd=1)|(cd=2) ;
 
 //Working State (W)
-formula working = true ;
+formula working = (cp=3) & (cd=3);
 
 
 //Assigning rewards to assess the performance
-rewards "uptime"
-	working : 1;
+rewards "reliability"
+    working: 100; // High reward for being in a fully working state
+    degraded: 50; // Medium reward for being in a degraded state
+    failed: 0; // No reward for being in a failed state
 endrewards
 
-rewards "degraded"
-	degraded : 1;
-endrewards 
-
-rewards "downtime"
-	failed : 1;
+rewards "response_time"
+    [detC] true: 0.000593486; // Time taken to detect controller failure (4 seconds)
+    [fdetC] true: 0.00015; // Time taken for failing to detect controller failure
+    [trigger_logs] true: 0.0000125; // Time taken to trigger logs
+    [fail] true: 0.50; // Time taken to handle failure
 endrewards
+
+rewards "operational_efficiency"
+    (sw=9) & (c=5): 1.00; // Highest efficiency when all switches and controllers are operational
+    (sw<9) & (c=5): 0.75; // Reduced efficiency when switches are down but controllers are fully operational
+    (sw=9) & (c<5): 0.50; // Reduced efficiency when controllers are down but switches are fully operational
+    (sw<9) & (c<5): 0.25; // Lower efficiency when both switches and controllers are down
+endrewards
+
+
+rewards "maintenance_cost"
+    [repair] true : 20; // Cost for performing repair actions
+    [switch_fails] true : 10; // Cost when a switch fails
+    [controller_fails] true : 15; // Cost when a controller fails
+endrewards
+
