@@ -1,8 +1,5 @@
 //@Author: Agrippina Mwangi
-//Task Description: HCTMC System model
-//Reliability Model variables
-
-
+//Task Description: Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms
 
 ctmc
 
@@ -36,12 +33,6 @@ const double ss = 1/3*y2s;                // migS to W2 jump rate
 const double alphaS = 1/4*y2s;            // fdetS to W1 jump rate
 const double deltaS = 1/2*y2s;            // detS to fdetS jump rate
 const double alphaC = 1/y2s;            //fdetC to W1 jump rate
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////  THE NETWORK /////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 module switch
