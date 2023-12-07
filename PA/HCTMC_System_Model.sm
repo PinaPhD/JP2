@@ -34,13 +34,12 @@ const double alphaS = 1/4*y2s;            // fdetS to W1 jump rate
 const double deltaS = 1/2*y2s;            // detS to fdetS jump rate
 const double alphaC = 1/y2s;            //fdetC to W1 jump rate
 
-
 module switch
 	//OpenFlow Switch at the Data Plane 
 	//Source Switch (SW1) receives data samples from LDAQ and sends them to the destination Switch (SW9) 
 	//to the ECP and vPAC nodes.
-	sw : [0..10] init 10;                     //9 switch network - ring topology
-	[switch_fails] sw>1 -> sw*lambdaSW: (sw'=sw-1);       //when a single switch fails (NFV instance)
+	sw : [0..9] init 9;                                    //9 switch network - ring topology
+	[switch_fails] sw>0 -> sw*lambdaSW: (sw'=sw-1);       //when a single switch fails (NFV instance)
 endmodule
 
 
@@ -50,17 +49,20 @@ module controller
 	[controller_fails] c>1 -> c*lambdaC : (c'=c-1);          //When a single controller fails 
 endmodule
 
-module controller_cluster
+module sdniotedgenet
 	//Defining the working states and the transition jump rates for the control plane cluster
 	// 3 - Working state, 2 - Detect Controller Failure (detC), 1 - fail to detect controller failure, 0 -Failed state
 	cp : [0..3] init 3;    	   		//Start from the working state
 	
 	[detC] (cp>0 & c>MIN_CONTROLLERS) -> dc : (cp'=2);   //moves to the detC state
 	[fdetC] (cp=2 & c>MIN_CONTROLLERS) -> deltaC : (cp'=1);     //moves to fdetC state
-	[trigger_logs] (cp=1 & c>MIN_CONTROLLERS) -> alphaC : (cp'=3);      //redetects controller failure at W1
-	[fail] (cp=1 & c>MIN_CONTROLLERS) | (cp=1 & c=MIN_CONTROLLERS) | (sw>MIN_SWITCHES)-> lambdaC : (cp' = 0);           // move to failed state and migrate the switches
-	[migS] (cp=2 & c> MIN_CONTROLLERS & sw >=MIN_SWITCHES) -> lambdaM
-	[repair] (cp=0 & c>MIN_CONTROLLERS) -> muC : (cp'=3);                             //repairing the controller (Reboot or Migrate VM)
+	//Sends another HBR to confirm if the controller is still active
+	[trigger_logs] (cp=1 & c>MIN_CONTROLLERS) -> alphaC : (cp'=3);      
+	[fail] (cp=1 & c>MIN_CONTROLLERS) | (cp=1 & c=MIN_CONTROLLERS) | (sw>MIN_SWITCHES)-> lambdaC : (cp' = 0); 
+	// move to failed state and migrate the switches        
+	[migS] (cp=2 & c> MIN_CONTROLLERS & sw >=MIN_SWITCHES) -> lambdaM ;
+	//repairing the controller (Reboot or Migrate VM)
+	[repair] (cp=0 & c>MIN_CONTROLLERS) -> muC : (cp'=3);         
 
 endmodule
 
