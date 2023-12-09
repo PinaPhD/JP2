@@ -60,5 +60,5 @@ try:
     # Start the MQTT client
     client.loop_forever()
 except KeyboardInterrupt:
-    print("Subscription stopped by O&M Personnel")
+    print("\n\nSubscription stopped by O&M Personnel\n\n")
     client.disconnect()

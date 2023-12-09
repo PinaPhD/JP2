@@ -3,12 +3,9 @@
 import paho.mqtt.publish as publish
 import time
 import random
-import threading
-
 
 MQTT_BROKER = "localhost"  # Change this to the IP of your MQTT broker if it's not local
 MQTT_PORT = 1883
-
 
 # MQTT Topics for Wind Turbine (WT) parameters with 50Hz sampling rate
 WT_topics = [
@@ -17,80 +14,49 @@ WT_topics = [
     "WT/Temp/Generator",
     "WT/Temp/Nacelle",
     "WT/Temp/Ambient",
-    "WT/TowerVibration/XY",
-    "WT/ShaftDisplacement/Vertical",
-    "WT/ShaftDisplacement/Horizontal",
-    "WT/PitchPosition",
-    "WT/RotorSpeed",
-    "WT/GeneratorSpeed",
-    "WT/WindSpeed",
-    "WT/YawingDirection"
+    "WT/Vibration/TowerXY",
+    "WT/Displacement/ShaftVertical",
+    "WT/Displacement/ShaftHorizontal",
+    "WT/Displacement/Pitch",
+    "WT/Speed/Rotor",
+    "WT/Speed/Generator",
+    "WT/Speed/WindSpeed",
+    "WT/Direction/Yawing"
 ]
 
-# Additional MQTT Topics for parameters with 20kHz sampling rate
-high_freq_topics = [
-    "WT/EC/Va", "WT/EC/Vb","WT/EC/Vc",
-    "WT/EC/Ia","WT/EC/Ib","WT/EC/Ic",
-    "WT/Vibration",
-    "WT/Displacement"
-]
+# Function to generate sensor data from the Wind Turbine 
+def generate_sensor_data():
+    sensor_values = {
+        "GearOil": random.uniform(-20, 120),
+        "GearBearing": random.uniform(-20, 150),
+        "Generator": random.uniform(-20, 150),
+        "Nacelle": random.uniform(-40, 70),
+        "Ambient": random.uniform(-40, 45),
+        "TowerXY": random.uniform(0, 5),
+        "ShaftVertical": random.uniform(0, 10),
+        "ShaftHorizontal": random.uniform(0, 10),
+        "Pitch": random.uniform(0, 360),
+        "Rotor": random.uniform(0, 30),  # Assuming 30 RPM for large wind turbines
+        "Generator": random.uniform(0, 1800),  # Assuming a maximum of 1800 RPM
+        "WindSpeed": random.uniform(0, 60),  # Assuming 60 m/s max wind speed
+        "Yawing": random.uniform(0, 360)
+    }
+    return sensor_values
 
-# Combine all topics into one list if needed
-all_topics = WT_topics + high_freq_topics
-
-# Function to generate random data for each sensor type
-def generate_sensor_data(sensor_type):
-    # Assuming the range of sensor readings is 0-100 for simplicity
-    # You should modify these ranges according to the actual sensor specifications
-    if "Temp" in sensor_type:
-        return random.uniform(-50, 150)  # Example range for temperature
-    elif "Vibration" in sensor_type or "ShaftDisplacement" in sensor_type:
-        return random.uniform(0, 10)  # Example range for vibration or displacement
-    elif "PitchPosition" in sensor_type or "YawingDirection" in sensor_type:
-        return random.uniform(0, 360)  # Example range for pitch position or yawing direction
-    elif "Speed" in sensor_type:
-        return random.uniform(0, 2000)  # Example range for speed
-    elif "Voltage" in sensor_type or "Current" in sensor_type:
-        return random.uniform(0, 1000)  # Example range for voltage or current
-    else:
-        return random.uniform(0, 100)  # Default range for any other sensor type
-
-
-def publish_50Hz_data():
+# Function to publish data at 50Hz
+def publish_sensor_data():
     try:
-        while True:  # Start an infinite loop
+        while True:
+            sensor_data = generate_sensor_data()
             for topic in WT_topics:
-                # Generate a random message or use a sensor reading
-                value=generate_sensor_data()
-                publish.single(topic, message, hostname=MQTT_BROKER, port=MQTT_PORT)
- 	    #Sending the sensor data every 20ms 
-	    time.sleep(0.02)  
+                sensor_name = topic.split('/')[-1]  # Extracting the sensor name from the topic
+                value = sensor_data[sensor_name]
+                publish.single(topic, payload=value, hostname=MQTT_BROKER, port=MQTT_PORT)
+                print(f"Published {value:.2f} to {topic}")
+            time.sleep(0.02)  # Sleep for 20 milliseconds
     except KeyboardInterrupt:
-        print("Publishing stopped by user")
-
-def publish_20kHz_data():
-    while True:
-        for topic in high_freq_topics:
-            value = generate_random_value()
-            publish.single(topic, value, hostname=MQTT_BROKER, port=MQTT_PORT)
-        #Sending the sensor data every 50 microseconds
-	time.sleep(0.00005)  
-
-# Set up threads for publishing
-def start_publishing():
-    thread_50Hz = threading.Thread(target=publish_50Hz_data)
-    thread_20kHz = threading.Thread(target=publish_20kHz_data)
-
-    thread_50Hz.start()
-    thread_20kHz.start()
-
-    thread_50Hz.join()
-    thread_20kHz.join()
+        print("\n\nPublishing stopped by publisher.\n\n")
 
 # Run the publish function
 if __name__ == '__main__':
-    try:
-        start_publishing()
-    except KeyboardInterrupt:
-        print("Publishing stopped by IoT Subscriber.")
-
+    publish_sensor_data()
