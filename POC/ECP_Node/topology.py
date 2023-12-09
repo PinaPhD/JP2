@@ -1,5 +1,5 @@
 
-#!/usr/bin/env python3
+#!/usr/bin/python
 
 from mininet.net import Mininet
 from mininet.node import Node, Controller, OVSSwitch, OVSKernelSwitch, Host
@@ -109,5 +109,16 @@ class SDN_Enabled_IoT_Edge_Network(Topo):
                 self.addLink(fd9,ECP5)
                 self.addLink(fd9,ECP6)
                 self.addLink(fd9,ECP7)
+		
+		#Appending the Publish and Subscribe script that run once the network 
+		#starts operating
+		net.get('ldaq1').cmd('python PUB/IoT_Publish.py')
+	        net.get('ldaq1').cmd('python PUB/IoT_Publish2.py')
 
+		net.get('ecp1').cmd('python SUB/ECP_subscribe.py')
+		net.get('ecp2').cmd('python SUB/ECP_subscribe.py')
+
+		#Connecting to the Remote Controller Cluster (C0-C1-C2)
+		net = Mininet(topo=SDN_Enabled_IoT_Edge_Network(),controller=None)
+		net.addController('c0',controller=RemoteController,ip='192.168.16.10',port='6653')
 topos = {'sdniotedge': SDN_Enabled_IoT_Edge_Network}

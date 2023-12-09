@@ -74,7 +74,7 @@ class SDN_Enabled_IoT_Edge_Network(Topo):
 def main():
     topo = SDN_Enabled_IoT_Edge_Network()
     net = Mininet(topo=topo, controller=None)
-    net.addController('c0', controller=RemoteController, ip='192.168.16.128', port=6653)
+    net.addController('c0', controller=RemoteController, ip='192.168.16.10', port=6653)
 
     net.start()
     CLI(net)
