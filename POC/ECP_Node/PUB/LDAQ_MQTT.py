@@ -49,13 +49,22 @@ def publish_sensor_data():
         while True:
             sensor_data = generate_sensor_data()
             for topic in WT_topics:
-                sensor_name = topic.split('/')[-1]  # Extracting the sensor name from the topic
-                value = sensor_data[sensor_name]
+                # Correctly extracting the last part of the topic as the sensor name
+                sensor_name = topic.split('/')[-1]  # This is the actual sensor name.
+                value = sensor_data.get(sensor_name, "Unknown Sensor")
+                
+                if value == "Unknown Sensor":
+                    print(f"Sensor name '{sensor_name}' not found in sensor data.")
+                    continue  # Skip this iteration if the sensor name is not found
+                
+                # Publish the sensor data to the topic
                 publish.single(topic, payload=value, hostname=MQTT_BROKER, port=MQTT_PORT)
                 print(f"Published {value:.2f} to {topic}")
             time.sleep(0.02)  # Sleep for 20 milliseconds
     except KeyboardInterrupt:
         print("\n\nPublishing stopped by publisher.\n\n")
+
+
 
 # Run the publish function
 if __name__ == '__main__':
