@@ -9,6 +9,8 @@
 
 #### METHODOLOGY
 
+![Methodology](https://github.com/PinaPhD/JP2/blob/main/Methodology.png)
+
 ##### Part 1: Probabilistic quantitative HCTMC system model
 [HCTMC Model](https://github.com/PinaPhD/JP2/blob/main/HCTMC_MODEL/hctmc_system_model.sm)
 
