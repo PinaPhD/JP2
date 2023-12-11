@@ -4,7 +4,7 @@
 #### ABSTRACT
 
 
-<img src="https://github.com/PinaPhD/JP2/blob/main/ReadMe_Logical.png" width="300" height="200">
+<img src="https://github.com/PinaPhD/JP2/blob/main/ReadMe_Logical.png" width="800" height="500">
 
 
 #### METHODOLOGY
