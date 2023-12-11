@@ -7,6 +7,8 @@
 //@DateCreated: December 2023
 //@Task_Description: EDF Secondment
 
+ctmc
+
 /////////////////////////////////////////////////////////////////////
 //////////////// FAILURE AND REPAIR RATES ///////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -29,8 +31,6 @@ const double lambdaM;
 const double lambdaSS;
 
 const double muP;
-
-ctmc
 
 
 //////////////////////////// CONTROLLER CLUSTER @ CONTROLPLANE //////////////////////////////////////////////
@@ -59,7 +59,7 @@ module C3
   [] c3=0 -> muC : (c3'=1);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
 endmodule
 
-//////////////////////////// SWITCH NETWORK @ DATAPLANE //////////////////////////////////////////////
+////////////////////////////////////// SWITCH NETWORK @ DATAPLANE ////////////////////////////////////////////
 
 module SW1
   sw1 : [0..1] init 1; //1 - Working , 0=Failed
@@ -130,23 +130,40 @@ endmodule
 
 /////////////////////////////// SDN-Enabled IoT-Edge Network   //////////////////////////////////
 module sdnnet
+  //SDN Network Transitions based on the Markov Chain in Figure 4 and Table I
   d : [0..8]  init 8;   // W = 8 , detC =7 , fdetC =6 , migS =5 , detS =4, fdetS =3 , D1 =2 , D2 =1 , F = 0
   hbr : [0..4] init 4;   //4 seconds HBR 
-
-  //SDN Network Transitions based on the Markov Chain in Figure 4 and Table I
-  [] ((d=8)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDS : (d'=7);
+  swt: [0..5] init 5;    //setting a 10 minutes timer to restore a faulty switch
 
   //Before 4 seconds elapse, the system in detC state logs that 1 controller has failed and moves to Mig state. If the time elapse, it move to fdetC
-  // state and attempt to check if the controller has failed then moves back to detC state at rate alphaC.
+  // state and attempt to check if the controller has failed then moves back to detC state at rate alphaC.  
+
+  ///////PART I: FROM W TO D1 STATE
+  [] ((d=8)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDC : (d'=7);
   [] ((d=7)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1)) &(hbr=0) )-> deltaC : (d'=6) & (hbr'=4);  //reset the timer for the next test
-  [] (d=7) & hbr>0 -> (hbr'= hbr-1);                //Decreases the timer when in detC state
+  [] ((d=7) & (hbr>0)) -> (hbr'= hbr-1);                //Decreases the timer when in detC state
   [] (d=7 &(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaM : (d'=5);                     //Transition to MigS state
   [] ((d=6)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> alphaC : (d'=7);
-  [] ((d=5)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaSS : (d'=1);                  //   Transition to D1 state
-  [] ((d = 1) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDC : (d'=7); 
+  [] ((d=5)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaSS : (d'=2);                  //   Transition to D2 state
+
+  ///////PART II: FROM D1 TO FAILED STATE
+  [] ((d = 2) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDC : (d'=7); 
   [] ((d=7) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1)) & hbr=0) -> deltaC : (d'=6);
   [] ((d=7) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaM : (d'=5);
   [] ((d=5)&(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaC : (d'=0);   //system fails
+ 
+  
+  ////////PART III: FROM W TO D2 STATE
+  [] ((d=8) &(((c1=1&c2=1&c3=1) |(c1=1&c2=1&c3=1) | (c1=1&c2=1&c3=1))&(sw1=1&sw2=1&sw3=0&sw4=1&sw5=1&sw6=0&sw7=1&sw8=0&sw9=1))) -> lambdaDS : (d'=4);
+  [] ((d=4) &(((c1=1&c2=1&c3=1) |(c1=1&c2=1&c3=1) | (c1=1&c2=1&c3=1))&(sw1=1&sw2=1&sw3=0&sw4=1&sw5=1&sw6=0&sw7=1&sw8=0&sw9=1))&(swt=0)) -> deltaS : (d'=3);
+  [] ((d=4) & (swt>0)) -> (swt'=swt-1);                       //Decrease the time when in detS state
+  [] ((d=4) &(((c1=1&c2=1&c3=1) |(c1=1&c2=1&c3=1) | (c1=1&c2=1&c3=1))&(sw1=1&sw2=1&sw3=0&sw4=1&sw5=1&sw6=0&sw7=1&sw8=0&sw9=1))) -> lambdaS : (d'=1);
+  [] ((d=3) &(((c1=1&c2=1&c3=1) |(c1=1&c2=1&c3=1) | (c1=1&c2=1&c3=1))&(sw1=1&sw2=1&sw3=0&sw4=1&sw5=1&sw6=0&sw7=1&sw8=0&sw9=1))) -> alphaS : (d'=4); 
+
+ ///////PART IV: Overall repair tasks
+  [] ((d=2)&(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> muC : (d'=8);
+  [] ((d=1)&(((c1=1&c2=1&c3=1) |(c1=1&c2=1&c3=1) | (c1=1&c2=1&c3=1))&(sw1=1&sw2=1&sw3=0&sw4=1&sw5=1&sw6=0&sw7=1&sw8=0&sw9=1))) -> muS : (d'=8);
+  [] ((d=0)) -> muC : (d'=8);
   
 endmodule
 
