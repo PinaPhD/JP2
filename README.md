@@ -4,6 +4,9 @@
 #### ABSTRACT
 
 
+<img src="https://github.com/PinaPhD/JP2/blob/main/ReadMe_Logical.png" width="300" height="200">
+
+
 #### METHODOLOGY
 - On a physical server, three VMs were instantiated such that VM-A hosted $C_1$, VM-B hosted $C_2$, and VM-C hosted $C_3$. The OpenDaylight SDN controller (ODL SDNC) is used in this setup. ODL SDNC has a distributed-flat architecture. This implies that the SDN cluster comprises SDN controllers interacting as peers, unlike the hierarchical architecture where some SDN controllers are masters overseeing agent (or sub-level) controllers.
    
