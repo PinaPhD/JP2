@@ -16,6 +16,19 @@ const double lambdaS;
 const double muC;
 const double muS;
 
+//Intermediate states
+const double lambdaDC;
+const double deltaC;
+const double alphaC;
+
+const double lambdaDS;
+const double deltaS;
+const double alphaS;
+
+const double lambdaM;
+const double lambdaSS;
+
+const double muP;
 
 ctmc
 
@@ -24,117 +37,118 @@ ctmc
 
 // Controller 1
 module C1
-  c1 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  c1 : [0..1] init 1; //1 - Working , 1=Failed
 
-  [to_degrade] c1=2 -> lambdaC : (c1'=1); // From working state to degraded state
-  [to_fail] c1=1 -> lambdaC : (c1'=0); // From degraded to Failed state
-  [to_repair] c1=0 -> muC : (c1'=2);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
+  [] c1=1 -> lambdaC : (c1'=0);    // From Working to Failed state
+  [] c1=0 -> muC : (c1'=1);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
 endmodule
 
 // Controller 2
 module C2
-  c2 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  c2 : [0..1] init 1; //1 - Working , 1=Failed
 
-  [to_degrade] c2=2 -> lambdaC : (c2'=1); // From working state to degraded state
-  [to_fail] c2=1 -> lambdaC : (c2'=0); // From degraded to Failed state
-  [to_repair] c2=0 -> muC : (c2'=2);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
+  [] c2=1 -> lambdaC : (c2'=0);    // From Working to Failed state
+  [] c2=0 -> muC : (c2'=1);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
 endmodule
 
 // Controller 3
 module C3
-  c3 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  c3 : [0..1] init 1; //1 - Working , 1=Failed
 
-  [to_degrade] c3=2 -> lambdaC : (c3'=1); // From working state to degraded state
-  [to_fail] c3=1 -> lambdaC : (c3'=0); // From degraded to Failed state
-  [to_repair] c3=0 -> muC : (c3'=2);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
+  [] c3=1 -> lambdaC : (c3'=0);    // From Working to Failed state
+  [] c3=0 -> muC : (c3'=1);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
 endmodule
 
 //////////////////////////// SWITCH NETWORK @ DATAPLANE //////////////////////////////////////////////
 
 module SW1
-  sw1 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw1 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw1=2 -> lambdaC : (sw1'=1); // From working state to degraded state
-  [to_fail] sw1=1 -> lambdaC : (sw1'=0); // From degraded to Failed state
-  [to_repair] sw1=0 -> muC : (sw1'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+  [] sw1=1 -> lambdaC : (sw1'=0); // From Working to Failed state
+  [] sw1=0 -> muC : (sw1'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 
 endmodule
 
 module SW2
-  sw2 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw2 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw2=2 -> lambdaC : (sw2'=1); // From working state to degraded state
-  [to_fail] sw2=1 -> lambdaC : (sw2'=0); // From degraded to Failed state
-  [to_repair] sw2=0 -> muC : (sw2'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw2=1 -> lambdaC : (sw2'=0); // From Working to Failed state
+  [] sw2=0 -> muC : (sw2'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 module SW3
-  sw3 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw3 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw3=2 -> lambdaC : (sw3'=1); // From working state to degraded state
-  [to_fail] sw3=1 -> lambdaC : (sw3'=0); // From degraded to Failed state
-  [to_repair] sw3=0 -> muC : (sw3'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw3=1 -> lambdaC : (sw3'=0); // From Working to Failed state
+  [] sw3=0 -> muC : (sw3'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 module SW4
-  sw4 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw4 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw4=2 -> lambdaC : (sw4'=1); // From working state to degraded state
-  [to_fail] sw4=1 -> lambdaC : (sw4'=0); // From degraded to Failed state
-  [to_repair] sw4=0 -> muC : (sw4'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw4=1 -> lambdaC : (sw4'=0); // From Working to Failed state
+  [] sw4=0 -> muC : (sw4'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 module SW5
-  sw5 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw5 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw5=2 -> lambdaC : (sw5'=1); // From working state to degraded state
-  [to_fail] sw5=1 -> lambdaC : (sw5'=0); // From degraded to Failed state
-  [to_repair] sw5=0 -> muC : (sw5'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw5=1 -> lambdaC : (sw5'=0); // From Working to Failed state
+  [] sw5=0 -> muC : (sw5'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 module SW6
-  sw6 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw6 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw6=2 -> lambdaC : (sw6'=1); // From working state to degraded state
-  [to_fail] sw6=1 -> lambdaC : (sw6'=0); // From degraded to Failed state
-  [to_repair] sw6=0 -> muC : (sw6'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw6=1 -> lambdaC : (sw6'=0); // From Working to Failed state
+  [] sw6=0 -> muC : (sw6'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 
 module SW7
-  sw7 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw7 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw7=2 -> lambdaC : (sw7'=1); // From working state to degraded state
-  [to_fail] sw7=1 -> lambdaC : (sw7'=0); // From degraded to Failed state
-  [to_repair] sw7=0 -> muC : (sw7'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw7=1 -> lambdaC : (sw7'=0); // From Working to Failed state
+  [] sw7=0 -> muC : (sw7'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 
 module SW8
-  sw8 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw8 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw8=2 -> lambdaC : (sw8'=1); // From working state to degraded state
-  [to_fail] sw8=1 -> lambdaC : (sw8'=0); // From degraded to Failed state
-  [to_repair] sw8=0 -> muC : (sw8'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+  [] sw8=1 -> lambdaC : (sw8'=0); // From Working to Failed state
+  [] sw8=0 -> muC : (sw8'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
-
 
 module SW9
-  sw9 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+  sw9 : [0..1] init 1; //1 - Working , 0=Failed
 
-  [to_degrade] sw9=2 -> lambdaC : (sw9'=1); // From working state to degraded state
-  [to_fail] sw9=1 -> lambdaC : (sw9'=0); // From degraded to Failed state
-  [to_repair] sw9=0 -> muC : (sw9'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
-
+  [] sw9=1 -> lambdaC : (sw9'=0); // From Working to Failed state
+  [] sw9=0 -> muC : (sw9'=1);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
 endmodule
 
 
+/////////////////////////////// SDN-Enabled IoT-Edge Network   //////////////////////////////////
+module sdnnet
+  d : [0..8]  init 8;   // W = 8 , detC =7 , fdetC =6 , migS =5 , detS =4, fdetS =3 , D1 =2 , D2 =1 , F = 0
+  hbr : [0..4] init 4;   //4 seconds HBR 
+
+  //SDN Network Transitions based on the Markov Chain in Figure 4 and Table I
+  [] ((d=8)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDS : (d'=7);
+
+  //Before 4 seconds elapse, the system in detC state logs that 1 controller has failed and moves to Mig state. If the time elapse, it move to fdetC
+  // state and attempt to check if the controller has failed then moves back to detC state at rate alphaC.
+  [] ((d=7)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1)) &(hbr=0) )-> deltaC : (d'=6) & (hbr'=4);  //reset the timer for the next test
+  [] (d=7) & hbr>0 -> (hbr'= hbr-1);                //Decreases the timer when in detC state
+  [] (d=7 &(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaM : (d'=5);                     //Transition to MigS state
+  [] ((d=6)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> alphaC : (d'=7);
+  [] ((d=5)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaSS : (d'=1);                  //   Transition to D1 state
+  [] ((d = 1) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDC : (d'=7); 
+  [] ((d=7) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1)) & hbr=0) -> deltaC : (d'=6);
+  [] ((d=7) &(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaM : (d'=5);
+  [] ((d=5)&(((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaC : (d'=0);   //system fails
+  
+endmodule
 
 
 
