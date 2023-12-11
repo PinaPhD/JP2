@@ -1,0 +1,54 @@
+
+//Normalizing factor
+const double y2s=365.25*24*60*60;   //from year to seconds
+const double h2s=60*60;             //from hour to seconds
+
+ 
+const double lambdaC = 1/(50*y2s);
+const double lambdaS = 1/(25*y2s);
+const double muC = 1/(2*h2s);
+const double muS = 1/(2*h2s);
+
+//Intermediate states
+const double lambdaDC = 1/(17*y2s) ; 
+const double deltaC = 0.000593486;      //from Wireshark capture
+const double alphaC = 1/(12*y2s);
+
+const double lambdaDS;
+const double deltaS = 1/(20*y2s);
+const double alphaS = 1/(12*y2s);
+
+const double lambdaM = 1/(15*y2s);
+const double lambdaSS = 1/(18*y2s);
+
+const double muP = 1/(2*h2s);
+
+
+const double t = 100; // Define the time frame
+P=? [ F<=t d!=0 ]; // Probability that system is not in failure state within time t
+
+// Query for component reliability (example for controller C1)
+P=? [ F<=t c1=1 ]; // Probability that controller C1 remains operational within time t
+
+
+// Probability that the system is operational at time t
+const double t_availability = 1000; // Adjust time as needed
+P=? [ F=t_availability d!=0 ];
+
+// Probability that the system is operational even if one controller is down at time t
+
+//P=? [ F=t ((c1=0 & c2=1 & c3=1) | (c1=1 & c2=0 & c3=1) | (c1=1 & c2=1 & c3=0)) ];
+
+
+// Expected time until the system reaches a failure state for the first time
+R{"time_to_failure"}=? [ F d=0 ];
+
+// Expected time to recover from a failure state
+R{"time_to_recover"}=? [ F d=8 | d=1 | d=2 ]; // Assuming d=8, d=1, and d=2 are recovery states
+
+// Long-term probability of the system being operational
+const double t_long_term = 10000;
+P=? [ G[0,t_long_term] d!=0 ];
+
+
+
