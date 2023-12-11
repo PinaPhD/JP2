@@ -4,11 +4,135 @@
 /////////////////////////////////////////////////////////////////////
 
 //@Author: Agrippina Mwangi
-//@DateCreated: November 2023
+//@DateCreated: December 2023
 //@Task_Description: EDF Secondment
+
+/////////////////////////////////////////////////////////////////////
+//////////////// FAILURE AND REPAIR RATES ///////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+const double lambdaC;
+const double lambdaS;
+const double muC;
+const double muS;
 
 
 ctmc
+
+
+//////////////////////////// CONTROLLER CLUSTER @ CONTROLPLANE //////////////////////////////////////////////
+
+// Controller 1
+module C1
+  c1 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] c1=2 -> lambdaC : (c1'=1); // From working state to degraded state
+  [to_fail] c1=1 -> lambdaC : (c1'=0); // From degraded to Failed state
+  [to_repair] c1=0 -> muC : (c1'=2);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
+endmodule
+
+// Controller 2
+module C2
+  c2 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] c2=2 -> lambdaC : (c2'=1); // From working state to degraded state
+  [to_fail] c2=1 -> lambdaC : (c2'=0); // From degraded to Failed state
+  [to_repair] c2=0 -> muC : (c2'=2);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
+endmodule
+
+// Controller 3
+module C3
+  c3 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] c3=2 -> lambdaC : (c3'=1); // From working state to degraded state
+  [to_fail] c3=1 -> lambdaC : (c3'=0); // From degraded to Failed state
+  [to_repair] c3=0 -> muC : (c3'=2);     // Repair the failed Controller (Reboot VM or Reconfigure SDN controller)
+endmodule
+
+//////////////////////////// SWITCH NETWORK @ DATAPLANE //////////////////////////////////////////////
+
+module SW1
+  sw1 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw1=2 -> lambdaC : (sw1'=1); // From working state to degraded state
+  [to_fail] sw1=1 -> lambdaC : (sw1'=0); // From degraded to Failed state
+  [to_repair] sw1=0 -> muC : (sw1'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+module SW2
+  sw2 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw2=2 -> lambdaC : (sw2'=1); // From working state to degraded state
+  [to_fail] sw2=1 -> lambdaC : (sw2'=0); // From degraded to Failed state
+  [to_repair] sw2=0 -> muC : (sw2'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+module SW3
+  sw3 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw3=2 -> lambdaC : (sw3'=1); // From working state to degraded state
+  [to_fail] sw3=1 -> lambdaC : (sw3'=0); // From degraded to Failed state
+  [to_repair] sw3=0 -> muC : (sw3'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+module SW4
+  sw4 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw4=2 -> lambdaC : (sw4'=1); // From working state to degraded state
+  [to_fail] sw4=1 -> lambdaC : (sw4'=0); // From degraded to Failed state
+  [to_repair] sw4=0 -> muC : (sw4'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+module SW5
+  sw5 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw5=2 -> lambdaC : (sw5'=1); // From working state to degraded state
+  [to_fail] sw5=1 -> lambdaC : (sw5'=0); // From degraded to Failed state
+  [to_repair] sw5=0 -> muC : (sw5'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+module SW6
+  sw6 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw6=2 -> lambdaC : (sw6'=1); // From working state to degraded state
+  [to_fail] sw6=1 -> lambdaC : (sw6'=0); // From degraded to Failed state
+  [to_repair] sw6=0 -> muC : (sw6'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+
+module SW7
+  sw7 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw7=2 -> lambdaC : (sw7'=1); // From working state to degraded state
+  [to_fail] sw7=1 -> lambdaC : (sw7'=0); // From degraded to Failed state
+  [to_repair] sw7=0 -> muC : (sw7'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
+
+
+module SW8
+  sw8 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw8=2 -> lambdaC : (sw8'=1); // From working state to degraded state
+  [to_fail] sw8=1 -> lambdaC : (sw8'=0); // From degraded to Failed state
+  [to_repair] sw8=0 -> muC : (sw8'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+endmodule
+
+
+module SW9
+  sw9 : [0..2] init 2; //2 - Working , 1=Degraded, 2=Failed
+
+  [to_degrade] sw9=2 -> lambdaC : (sw9'=1); // From working state to degraded state
+  [to_fail] sw9=1 -> lambdaC : (sw9'=0); // From degraded to Failed state
+  [to_repair] sw9=0 -> muC : (sw9'=2);     // Repair the failed Switch (Reboot NFV VM or Reconfigure Switch)
+
+endmodule
 
 
 
