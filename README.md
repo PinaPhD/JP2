@@ -20,7 +20,7 @@
 ##### Part 3: Methodology FlowChart
  To begin with, a probabilistic quantitative PRISM®-based HCTMC system model assesses the probability and impact of potential failures. This is followed by a proof-of-concept simulation on a testbed, which examines how these modeled failures affect the network service quality. This systematic analysis gathers crucial insights into the network’s performance under stress, enabling us to propose best practices that would bolster the system’s dependability.
 
-![Methodology](https://github.com/PinaPhD/JP2/blob/main/Methodology.png)
+<img src="https://github.com/PinaPhD/JP2/blob/main/Methodology.png" width="300" height="500">
 
 #### PART ONE: SETTING UP THE CONTROLLER CLUSTER - ODL ARGON (ver.18.0)
 
