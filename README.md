@@ -28,58 +28,6 @@
 </div>
 
 
-#### PART ONE: SETTING UP THE CONTROLLER CLUSTER - ODL ARGON (ver.18.0)
-
-```bash
-sudo apt-get -y update && sudo apt-get -y upgrade
-sudo apt-get -y install unzip
-sudo apt-get -y install openjdk-17-jre OR sudo apt install openjdk-17-jdk
-sudo update-alternatives --config java
-ls -l /etc/alternatives/java
-echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> ~/.bashrc
-source ~/.bashrc
-echo $JAVA_HOME
-```
-
-##### Go to the official OpenDaylight Website and copy the link to Argon (https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.18.2/karaf-0.18.2.tar.gz)
-
-```bash
-curl -XGET -O https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.18.2/karaf-0.18.2.tar.gz
-```
-
-
-Allow it to download, then unzip it:
-```bash
-tar -xvf karaf-0.18.2.tar.gz
-cd karaf-0.18.2/bin/
-./karaf
-```
-
-
-###### Now the ODL-Argon is up and running. 
-
-
-Install the relevant features: 
-
-```bash
-feature:install odl-openflowplugin-app-topology odl-openflowplugin-app-topology-manager odl-openflowplugin-drop-test odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-nxm-extensions
-
-feature:install odl-restconf odl-restconf-all odl-mdsal-model-odl-l2-types odl-mdsal-apidocs
- odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-nxm-extensions
-
-```
-
-
-#### Setting up Containernet
-
-```bash
-sudo apt install ansible git aptitude -y
-git clone https://github.com/containernet/containernet.git
-cd containernet
-sudo ansible-playbook -i "localhost," -c local install.yml
-sudo python3 examples/containernet_example.py
-```
-
 
 #### Cite our Work
 
