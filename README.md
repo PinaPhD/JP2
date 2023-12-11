@@ -24,7 +24,7 @@
  To begin with, a probabilistic quantitative PRISM®-based HCTMC system model assesses the probability and impact of potential failures. This is followed by a proof-of-concept simulation on a testbed, which examines how these modeled failures affect the network service quality. This systematic analysis gathers crucial insights into the network’s performance under stress, enabling us to propose best practices that would bolster the system’s dependability.
 
 <div align="center">
-  <img src="https://github.com/PinaPhD/JP2/blob/main/Methodology.png" width="400" height="500" />
+  <img src="https://github.com/PinaPhD/JP2/blob/main/Methodology.png" width="400" height="400" />
 </div>
 
 
