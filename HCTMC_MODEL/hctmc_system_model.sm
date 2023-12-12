@@ -129,6 +129,7 @@ endmodule
 
 
 /////////////////////////////// SDN-Enabled IoT-Edge Network   //////////////////////////////////
+
 module sdnnet
   //SDN Network Transitions based on the Markov Chain in Figure 4 and Table I
   d : [0..8]  init 8;   // W = 8 , detC =7 , fdetC =6 , migS =5 , detS =4, fdetS =3 , D1 =2 , D2 =1 , F = 0
@@ -140,7 +141,8 @@ module sdnnet
 
   ///////PART I: FROM W TO D1 STATE
   [] ((d=8)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) ->  lambdaDC : (d'=7);
-  [] ((d=7)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1)) &(hbr=0) )-> deltaC : (d'=6) & (hbr'=4);  //reset the timer for the next test
+  [] ((d=7)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1)) &(hbr=0) )-> deltaC : (d'=6) & (hbr'=4);  
+  //reset the timer for the next test
   [] ((d=7) & (hbr>0)) -> (hbr'= hbr-1);                //Decreases the timer when in detC state
   [] (d=7 &(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> lambdaM : (d'=5);                     //Transition to MigS state
   [] ((d=6)&(((c1=0&c2=1&c3=1) |(c1=1&c2=0&c3=1) | (c1=1&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1))) -> alphaC : (d'=7);
@@ -168,9 +170,6 @@ module sdnnet
 endmodule
 
 
+//This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No.956433.
 
 
-
-//@Funding: This project has received funding from the European Union's 
-//Horizon 2020 research and innovation programme under the Marie 
-//Sklodowska-Curie grant agreement No.956433.
