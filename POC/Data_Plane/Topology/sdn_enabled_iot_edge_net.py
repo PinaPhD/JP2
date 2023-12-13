@@ -92,7 +92,7 @@ if __name__ == '__main__':
     setLogLevel('info')
 
     # Create the topology
-    topo = SDNEnabledIoTEdgeNet()
+    topo = sdn_enabled_iot_edge_net()
 
     # Define the remote controller
     remoteControllerIP = '192.168.122.120'
