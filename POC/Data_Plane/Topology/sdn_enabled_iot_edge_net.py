@@ -15,26 +15,30 @@ class sdn_enabled_iot_edge_net (Topo):
         
         # Add hosts (MUs, and LDAQs)
         info('Adding MUs, LDAQs, ECP, and vPAC nodes ...\n\n')
-        # Function to create hosts
-        def create_hosts(prefix, count, switch):
-            global last_ip_octet
-            for i in range(1, count + 1):
-                ip = f'192.168.10.{last_ip_octet}/24'
-                host = self.addHost(f'{prefix}{i}', ip=ip)
-                self.addLink(switch, host)
-                last_ip_octet += 1
-
-        # Add the first set of hosts (mu)
-        create_hosts('mu', 5, s[0])
-
-        # Add the second set of hosts (ldaq)
-        create_hosts('ldaq', 5, s[0])
-
-        # Add the third set of hosts (vpac)
-        create_hosts('vpac', 5, s[6])
-
-        # Add the fourth set of hosts (ecp)
-        create_hosts('ecp', 5, s[7])
+        
+        mu1 = net.addHost('mu1', cls=Host, ip='192.168.10.10/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:01')
+        mu1 = net.addHost('mu2', cls=Host, ip='192.168.10.15/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:02')
+        mu1 = net.addHost('mu3', cls=Host, ip='192.168.10.20/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:03')
+        mu1 = net.addHost('mu4', cls=Host, ip='192.168.10.25/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:04')
+        mu1 = net.addHost('mu5', cls=Host, ip='192.168.10.30/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:05')
+        mu1 = net.addHost('ldaq1', cls=Host, ip='192.168.10.35/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:06')
+        mu1 = net.addHost('ldaq2', cls=Host, ip='192.168.10.40/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:07')
+        mu1 = net.addHost('ldaq3', cls=Host, ip='192.168.10.45/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:08')
+        mu1 = net.addHost('ldaq4', cls=Host, ip='192.168.10.50/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:09')
+        mu1 = net.addHost('ldaq5', cls=Host, ip='192.168.10.55/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:10')
+        mu1 = net.addHost('vpac1', cls=Host, ip='192.168.10.60/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:11')
+        mu1 = net.addHost('vpac2', cls=Host, ip='192.168.10.65/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:12')
+        mu1 = net.addHost('vpac3', cls=Host, ip='192.168.10.70/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:13')
+        mu1 = net.addHost('vpac4', cls=Host, ip='192.168.10.75/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:14')
+        mu1 = net.addHost('vpac5', cls=Host, ip='192.168.10.80/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:15')
+        mu1 = net.addHost('ecp1', cls=Host, ip='192.168.10.85/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:16')
+        mu1 = net.addHost('ecp2', cls=Host, ip='192.168.10.90/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:17')
+        mu1 = net.addHost('ecp3', cls=Host, ip='192.168.10.95/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:18')
+        mu1 = net.addHost('ecp4', cls=Host, ip='192.168.10.100/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:19')
+        mu1 = net.addHost('ecp5', cls=Host, ip='192.168.10.105/24', defaultRoute='via 192.168.10.254', mac='00:00:00:00:00:20')
+        
+        
+    
 
         # Add links between switches
         info('Adding links between switches and added properties to mimick a real life network...\n\n')
@@ -53,35 +57,35 @@ class sdn_enabled_iot_edge_net (Topo):
 
         # Add links between switches and hosts
         info('Linking Merging Units to the Switches ...\n\n')
-        self.addLink(s[0], mu[0])  # s1 to mu1
-        self.addLink(s[0], mu[1])  # s1 to mu2
-        self.addLink(s[0], mu[2])  # s1 to mu3
-        self.addLink(s[1], mu[3])  # s2 to mu4
-        self.addLink(s[1], mu[4])  # s2 to mu5
-        self.addLink(s[1], mu[5])  # s2 to mu6
+        self.addLink(s[0], mu1)  # s1 to mu1
+        self.addLink(s[0], mu1)  # s1 to mu2
+        self.addLink(s[0], mu2)  # s1 to mu3
+        self.addLink(s[1], mu3)  # s2 to mu4
+        self.addLink(s[1], mu4)  # s2 to mu5
+        self.addLink(s[1], mu5)  # s2 to mu6
         
         # Add links between switches and hosts 
         info('Linking Local data acquisition modules (LDAQ) to the Switches ...\n\n')
-        self.addLink(s[0], ldaq[0])  # s1 to ldaq1
-        self.addLink(s[0], ldaq[1])  # s1 to ldaq2
-        self.addLink(s[0], ldaq[2])  # s1 to ldaq3
-        self.addLink(s[1], ldaq[3])  # s2 to ldaq4
-        self.addLink(s[1], ldaq[4])  # s2 to ldaq5
-        self.addLink(s[1], ldaq[5])  # s2 to ldaq6
+        self.addLink(s[0], ldaq1)  # s1 to ldaq1
+        self.addLink(s[0], ldaq2)  # s1 to ldaq2
+        self.addLink(s[0], ldaq3)  # s1 to ldaq3
+        self.addLink(s[1], ldaq4)  # s2 to ldaq4
+        self.addLink(s[1], ldaq5)  # s2 to ldaq5
+        self.addLink(s[1], ldaq6)  # s2 to ldaq6
 
 
         # Add links between switches and hosts 
         info('Linking ECP and vPAC nodes to the switches ...\n\n')
-        self.addLink(s[6], vpac[0])  # s7 to vpac1
-        self.addLink(s[6], vpac[1])  # s7 to vpac2
-        self.addLink(s[6], ecp[0])    # s7 to ecp1
-        self.addLink(s[6], ecp[1])    # s7 to ecp2
-        self.addLink(s[7], vpac[2])  # s8 to vpac3
-        self.addLink(s[7], vpac[3])  # s8 to vpac4
-        self.addLink(s[7], vpac[4])  # s8 to vpac5
-        self.addLink(s[7], ecp[2])   # s8 to ecp3
-        self.addLink(s[7], ecp[3])   # s8 to ecp4
-        self.addLink(s[8], ecp[4])    # s9 to ecp5
+        self.addLink(s[6], vpac1)  # s7 to vpac1
+        self.addLink(s[6], vpac2)  # s7 to vpac2
+        self.addLink(s[6], ecp1)    # s7 to ecp1
+        self.addLink(s[6], ecp2)    # s7 to ecp2
+        self.addLink(s[7], vpac3)  # s8 to vpac3
+        self.addLink(s[7], vpac4)  # s8 to vpac4
+        self.addLink(s[7], vpac5)  # s8 to vpac5
+        self.addLink(s[7], ecp3)   # s8 to ecp3
+        self.addLink(s[7], ecp4)   # s8 to ecp4
+        self.addLink(s[8], ecp5)    # s9 to ecp5
       
 
 if __name__ == '__main__':
