@@ -33,7 +33,7 @@ def run_topology():
 
     # Connect to a remote controller
     net = Mininet(topo=topo, controller=None)  # Disable the default controller
-    remoteControllerIP = '192.168.16.30'  # Replace with your controller's IP
+    remoteControllerIP = '192.168.122.120'  # Replace with your controller's IP
     remoteControllerPort = 6653  # controller's port, typically 6653
     net.addController('c0', controller=RemoteController, ip=remoteControllerIP, port=remoteControllerPort)
 
@@ -41,8 +41,8 @@ def run_topology():
 
     # Running the MQTT publish script on each host
     script_map = {
-		'h1': 'python3 /home/odl-sdnc/JP2/POC/ECP_Node/PUB/LDAQ_MQTT.py &', 
-		'h2': 'python3 /home/odl-sdnc/JP2/POC/ECP_Node/SUB/ECP_MQTT.py &'
+		'h1': 'python3 /home/odl/JP2/POC/ECP_Node/PUB/LDAQ_MQTT.py &', 
+		'h2': 'python3 /home/odl/JP2/POC/ECP_Node/SUB/ECP_MQTT.py &'
 		}
 
     for host in net.hosts:
