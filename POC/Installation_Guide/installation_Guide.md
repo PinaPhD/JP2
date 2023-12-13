@@ -38,6 +38,7 @@ feature:install odl-restconf odl-restconf-all odl-mdsal-model-odl-l2-types odl-m
  odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-nxm-extensions
 
 ```
+`feature:install odl-mdsal-apidocs odl-mdsal-model-odl-l2-types odl-openflowplugin-app-arbitratorreconciliation odl-openflowplugin-app-bulk-o-matic odl-openflowplugin-app-config-pusher odl-openflowplugin-app-forwardingrules-manager odl-openflowplugin-app-forwardingrules-sync odl-openflowplugin-app-lldp-speaker odl-openflowplugin-app-reconciliation-framework odl-openflowplugin-app-southbound-cli odl-openflowplugin-app-table-miss-enforcer odl-openflowplugin-app-topology odl-openflowplugin-app-topology-lldp-discovery odl-openflowplugin-app-topology-manager odl-openflowplugin-drop-test odl-openflowplugin-eric-extensions odl-openflowplugin-flow-services odl-openflowplugin-flow-services-rest odl-openflowplugin-libraries odl-openflowplugin-nsf-model odl-openflowplugin-nxm-extensions odl-openflowplugin-onf-extensions odl-openflowplugin-southbound` 
 
 ---
   

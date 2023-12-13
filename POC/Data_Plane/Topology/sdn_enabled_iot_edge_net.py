@@ -94,7 +94,7 @@ if __name__ == '__main__':
     topo = sdn_enabled_iot_edge_net()
 
     # Define the remote controller
-    remoteControllerIP = '192.168.122.120'
+    remoteControllerIP = '192.168.122.122'
     controller = RemoteController('c0', ip=remoteControllerIP, port=6653)
 
     # Start the network
