@@ -56,11 +56,10 @@ class sdn_enabled_iot_edge_net (Topo):
         # Add links between switches and hosts
         info('Linking Merging Units to the Switches ...\n\n')
         self.addLink(s[0], mu1)  # s1 to mu1
-        self.addLink(s[0], mu1)  # s1 to mu2
-        self.addLink(s[0], mu2)  # s1 to mu3
-        self.addLink(s[1], mu3)  # s2 to mu4
-        self.addLink(s[1], mu4)  # s2 to mu5
-        self.addLink(s[1], mu5)  # s2 to mu6
+        self.addLink(s[0], mu2)  # s1 to mu2
+        self.addLink(s[0], mu3)  # s1 to mu3
+        self.addLink(s[1], mu4)  # s2 to mu4
+        self.addLink(s[1], mu5)  # s2 to mu5
         
         # Add links between switches and hosts 
         info('Linking Local data acquisition modules (LDAQ) to the Switches ...\n\n')
@@ -69,7 +68,6 @@ class sdn_enabled_iot_edge_net (Topo):
         self.addLink(s[0], ldaq3)  # s1 to ldaq3
         self.addLink(s[1], ldaq4)  # s2 to ldaq4
         self.addLink(s[1], ldaq5)  # s2 to ldaq5
-        self.addLink(s[1], ldaq6)  # s2 to ldaq6
 
 
         # Add links between switches and hosts 
