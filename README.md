@@ -27,8 +27,8 @@
   <img src="https://github.com/PinaPhD/JP2/blob/main/Methodology.png" width="400" height="400" />
 </div>
 
-[ECP Nodes](https://github.com/PinaPhD/JP2/tree/main/POC/ECP_Node)  Cc: @Agrippina
-[VPAC Nodes](https://github.com/PinaPhD/JP2/tree/main/POC/vPAC_Node) Cc: @Nadine
+- [ECP Nodes](https://github.com/PinaPhD/JP2/tree/main/POC/ECP_Node)  Cc: @Agrippina
+- [VPAC Nodes](https://github.com/PinaPhD/JP2/tree/main/POC/vPAC_Node) Cc: @Nadine
 
 #### Cite our Work
 
