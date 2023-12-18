@@ -13,24 +13,27 @@ ctmc
 //////////////// FAILURE AND REPAIR RATES ///////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-const double lambdaC;
-const double lambdaS;
-const double muC;
-const double muS;
+const double y2s = 365.25*24*60*60;
+const double h2s = 60*60; 
+
+const double lambdaC =1/(50*y2s);
+const double lambdaS= 1/(25*y2s);
+const double muC = 1/(2*h2s);
+const double muS = 1/(2*h2s);
 
 //Intermediate states
-const double lambdaDC;
-const double deltaC;
-const double alphaC;
+const double lambdaDC = 0.00053965;   //Captured on Wireshark
+const double deltaC = 1/(3600*h2s);
+const double alphaC = 1/(3600*h2s);
 
-const double lambdaDS;
-const double deltaS;
-const double alphaS;
+const double lambdaDS = lambdaC;
+const double deltaS = 1/(36000*h2s);
+const double alphaS = 1/(3600*h2s);
 
-const double lambdaM;
-const double lambdaSS;
+const double lambdaM = 1/(35*h2s);
+const double lambdaSS = lambdaS;
 
-const double muP;
+const double muP = 1/(1*h2s);
 
 
 //////////////////////////// CONTROLLER CLUSTER @ CONTROLPLANE //////////////////////////////////////////////
@@ -132,9 +135,9 @@ endmodule
 
 module sdnnet
   //SDN Network Transitions based on the Markov Chain in Figure 4 and Table I
-  d : [0..8]  init 8;   // W = 8 , detC =7 , fdetC =6 , migS =5 , detS =4, fdetS =3 , D1 =2 , D2 =1 , F = 0
-  hbr : [0..4] init 4;   //4 seconds HBR 
-  swt: [0..5] init 5;    //setting a 10 minutes timer to restore a faulty switch
+  d : [0..8]  init 8;     // W = 8 , detC =7 , fdetC =6 , migS =5 , detS =4, fdetS =3 , D1 =2 , D2 =1 , F = 0
+  hbr : [0..4] init 4;   // 4 seconds HBR 
+  swt: [0..5] init 5;   // Setting a 10 minutes timer to restore a faulty switch
 
   //Before 4 seconds elapse, the system in detC state logs that 1 controller has failed and moves to Mig state. If the time elapse, it move to fdetC
   // state and attempt to check if the controller has failed then moves back to detC state at rate alphaC.  
@@ -168,6 +171,9 @@ module sdnnet
   [] ((d=0)) -> muC : (d'=8);
   
 endmodule
+
+label "operational" = c1=1 & c2=1 & c3=1 & sw1=1 & sw2=1 & sw3=1 & sw4=1 & sw5=1 & sw6=1 & sw7=1 & sw8=1 & sw9=1;
+label "failed" = ((c1=0&c2=0&c3=1) |(c1=1&c2=0&c3=0) | (c1=0&c2=1&c3=0))& (sw1=1&sw2=1&sw3=1&sw4=1&sw5=1&sw6=1&sw7=1&sw8=1&sw9=1);
 
 
 //This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No.956433.

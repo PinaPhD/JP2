@@ -1,0 +1,60 @@
+ctmc
+
+// Constants representing the rates of transitions from the table
+const double lambdaC = 1/(50*365.25*24*60*60); // Controller failure rate (50/year)
+const double lambdaS = 1/(25*365.25*24*60*60); // Switch failure rate (25/year)
+
+const double deltaC = 3600/(3600*60*60);       // Controller failure detection rate (3600/hour)
+const double lambdaM = 35/(60*60);             // Successful switch migration rate (35/hour)
+
+const double muC = 2/(60*60);                  // Controller repair rate (2/hour)
+const double deltaS = 360000/(3600*60*60);     // Switch failure detection rate (360000/hour)
+
+const double muS = 2/(60*60);                  // Switch repair rate (2/hour)
+const double lambdaSS = lambdaS;                // Assuming lambdaSS is the same as lambdaS
+
+const double alphaC = 1/(60*60);
+const double alphaS = 1/(60*60);
+
+const double muP = 1/(60*60);                  // PCEP trigger rate (1/hour)
+
+// States of the system
+module sdnnet
+	d : [0..5] init 4; // States W, D1, D2, F, detC, detS, migS, f_detC, f_detS
+
+	// Transitions from W state
+	[] (d=4) -> lambdaC : (d'=3);     // W to detC
+	[] (d=4) -> lambdaS : (d'=2);     // W to detS
+
+	// Transitions from detC state
+	[] (d=3) -> deltaC : (d'=1);      // detC to f_detC
+	[] (d=3) -> lambdaM : (d'=0);     // detC to migS
+
+	// Transitions from detS state
+	[] (d=2) -> deltaS : (d'=5);      // detS to f_detS
+	[] (d=2) -> lambdaSS : (d'=1);    // detS to D1
+
+	// Transitions from D1 state
+	[] (d=1) -> muC : (d'=4);         // D1 to W
+
+	// Transitions from F state
+	[] (d=0) -> muC : (d'=4);         // F to W
+
+	// Transitions from f_detC state
+	[] (d=5) -> alphaC : (d'=3);      // f_detC to detC
+
+	// Transitions from f_detS state
+	[] (d=1) -> alphaS : (d'=2);      // f_detS to detS
+
+	// Transitions from migS state
+	[] (d=0) -> muP : (d'=1);         // migS to D2
+
+	// Transitions from D2 state
+	[] (d=1) -> muS : (d'=4 );         // D2 to W
+
+	// Transitions for repair and migration
+	[] (d=1) -> muC : (d'=4);         // Repair to W
+	[] (d=0) -> lambdaM : (d'=1);     // Migration to D1
+
+
+endmodule
