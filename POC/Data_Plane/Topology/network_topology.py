@@ -16,23 +16,23 @@ class sdnnet( Topo ):
         m4 = self.addHost('m4', ip='10.0.1.13/24', defaultRoute='via 10.0.1.1')
         m5 = self.addHost('m5', ip='10.0.1.14/24', defaultRoute='via 10.0.1.1')
         
-        q1 = self.addHost('q1', ip='10.0.2.20/24', defaultRoute='via 10.0.2.1')
-        q2 = self.addHost('q2', ip='10.0.2.21/24', defaultRoute='via 10.0.2.1')
-        q3 = self.addHost('q3', ip='10.0.2.22/24', defaultRoute='via 10.0.2.1')
-        q4 = self.addHost('q4', ip='10.0.2.23/24', defaultRoute='via 10.0.2.1')
-        q5 = self.addHost('q5', ip='10.0.2.24/24', defaultRoute='via 10.0.2.1')
+        q1 = self.addHost('q1', ip='10.0.1.20/24', defaultRoute='via 10.0.1.1')
+        q2 = self.addHost('q2', ip='10.0.1.21/24', defaultRoute='via 10.0.1.1')
+        q3 = self.addHost('q3', ip='10.0.1.22/24', defaultRoute='via 10.0.1.1')
+        q4 = self.addHost('q4', ip='10.0.1.23/24', defaultRoute='via 10.0.1.1')
+        q5 = self.addHost('q5', ip='10.0.1.24/24', defaultRoute='via 10.0.1.1')
         
-        e1 = self.addHost('e1', ip='10.0.3.20/24', defaultRoute='via 10.0.3.1')
-        e2 = self.addHost('e2', ip='10.0.3.31/24', defaultRoute='via 10.0.3.1')
-        e3 = self.addHost('e3', ip='10.0.3.32/24', defaultRoute='via 10.0.3.1')
-        e4 = self.addHost('e4', ip='10.0.3.33/24', defaultRoute='via 10.0.3.1')
-        e5 = self.addHost('e5', ip='10.0.3.34/24', defaultRoute='via 10.0.3.1')
+        e1 = self.addHost('e1', ip='10.0.1.30/24', defaultRoute='via 10.0.1.1')
+        e2 = self.addHost('e2', ip='10.0.1.31/24', defaultRoute='via 10.0.1.1')
+        e3 = self.addHost('e3', ip='10.0.1.32/24', defaultRoute='via 10.0.1.1')
+        e4 = self.addHost('e4', ip='10.0.1.33/24', defaultRoute='via 10.0.1.1')
+        e5 = self.addHost('e5', ip='10.0.1.34/24', defaultRoute='via 10.0.1.1')
         
-        v1 = self.addHost('v1', ip='10.0.4.40/24', defaultRoute='via 10.0.4.1')
-        v2 = self.addHost('v2', ip='10.0.4.41/24', defaultRoute='via 10.0.4.1')
-        v3 = self.addHost('v3', ip='10.0.4.42/24', defaultRoute='via 10.0.4.1')
-        v4 = self.addHost('v4', ip='10.0.4.43/24', defaultRoute='via 10.0.4.1')
-        v5 = self.addHost('v5', ip='10.0.4.44/24', defaultRoute='via 10.0.4.1')
+        v1 = self.addHost('v1', ip='10.0.1.40/24', defaultRoute='via 10.0.1.1')
+        v2 = self.addHost('v2', ip='10.0.1.41/24', defaultRoute='via 10.0.1.1')
+        v3 = self.addHost('v3', ip='10.0.1.42/24', defaultRoute='via 10.0.1.1')
+        v4 = self.addHost('v4', ip='10.0.1.43/24', defaultRoute='via 10.0.1.1')
+        v5 = self.addHost('v5', ip='10.0.1.44/24', defaultRoute='via 10.0.1.1')
         
         
         #creating the ethernet switch network
