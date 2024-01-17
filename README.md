@@ -6,6 +6,26 @@
 
 #### ABSTRACT
 
+Offshore wind farms are increasingly adopting
+vendor-agnostic software-defined networking (SDN) to oversee
+their IoT-Edge networks. Given the challenging offshore context,
+it is essential to ensure consistent data exchange in the proposed
+SDN-enabled IoT-Edge networks, despite stochastic failures such
+as random component malfunction, software glitches, fluctuating
+resource usage, and inconsistent network traffic. This paper
+demonstrates how these failures occurring in both the control and
+data planes result in intermittent network service disruptions.
+Further, the paper proposes an effective recoverability and
+maintainability strategy and evaluates the proposed network’s
+steady-state behavior using a probabilistic Homogeneous Con-
+tinuous Time Markov Model (HCTMM). The HCTMM, tested
+across 15 scenarios with varied failure-repair rates, shows system
+availability, A ≥ 93.0%, for scenarios specific to the control plane
+and A ≥ 99.35% for data plane cases which tends to the industry
+service level agreement for system availability set at A = 99.999%
+(5 nines). Moreover,
+Index Terms—IoT-Edge, SDN, NFV, TSN, IEC61850, vPAC,
+HCTMM, offshore wind, dependability.
 
 <img src="https://github.com/PinaPhD/JP2/blob/main/ReadMe_Logical.png" width="800" height="500">
 
@@ -23,20 +43,13 @@
 ##### Part 3: Methodology FlowChart
  To begin with, a probabilistic quantitative PRISM®-based HCTMC system model assesses the probability and impact of potential failures. This is followed by a proof-of-concept simulation on a testbed, which examines how these modeled failures affect the network service quality. This systematic analysis gathers crucial insights into the network’s performance under stress, enabling us to propose best practices that would bolster the system’s dependability.
 
-<div align="center">
-  <img src="https://github.com/PinaPhD/JP2/blob/main/Methodology.png" width="400" height="400" />
-</div>
-
-- [ECP Nodes](https://github.com/PinaPhD/JP2/tree/main/POC/ECP_Node)  Cc: @Agrippina
-- [VPAC Nodes](https://github.com/PinaPhD/JP2/tree/main/POC/vPAC_Node) Cc: @Nadine
-
 #### Cite our Work
 
 ```bibtex
-@article{JP22024,
+@article{To_Be_Updated,
   title={Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms},
   author={Mwangi et al., },
-  journal={IEEE Transactions of Industrial Informatics},
+  journal={IEEE Transactions of Network and Service Management - Submitted},
   year={2024},
   ...
 }
