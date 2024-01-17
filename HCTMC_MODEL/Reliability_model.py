@@ -350,3 +350,11 @@ plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
 plt.grid()
 plt.legend
 plt.show()
+
+
+
+"""
+This work is under the Innovative Tools for Cyber-Physical Energy Systems  
+project funded by the European Union's Horizon 2020 research and innovation 
+programme under the Marie Sklodowska Curie grant agreement No 956433.
+"""
