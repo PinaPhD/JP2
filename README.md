@@ -24,7 +24,8 @@ availability, A ≥ 93.0%, for scenarios specific to the control plane
 and A ≥ 99.35% for data plane cases which tends to the industry
 service level agreement for system availability set at A = 99.999%
 (5 nines). Moreover,
-Index Terms—IoT-Edge, SDN, NFV, TSN, IEC61850, vPAC,
+
+- Index Terms—IoT-Edge, SDN, NFV, TSN, IEC61850, vPAC,
 HCTMM, offshore wind, dependability.
 
 <img src="https://github.com/PinaPhD/JP2/blob/main/ReadMe_Logical.png" width="800" height="500">
@@ -33,17 +34,14 @@ HCTMM, offshore wind, dependability.
 ---
 
 ##### Part 1: Probabilistic quantitative HCTMC system model
-[HCTMC Model](https://github.com/PinaPhD/JP2/blob/main/HCTMC_MODEL/hctmc_system_model.sm)
+[HCTMC Model](https://github.com/PinaPhD/JP2/blob/main/HCTMC_MODEL/)
 
 
 ##### Part 2: Proof-of-concept simulation testbed
 
 [Proof Of Concept Simulation Testbed](https://github.com/PinaPhD/JP2/tree/main/POC/)
 
-##### Part 3: Methodology FlowChart
- To begin with, a probabilistic quantitative PRISM®-based HCTMC system model assesses the probability and impact of potential failures. This is followed by a proof-of-concept simulation on a testbed, which examines how these modeled failures affect the network service quality. This systematic analysis gathers crucial insights into the network’s performance under stress, enabling us to propose best practices that would bolster the system’s dependability.
-
-#### Cite our Work
+##### Cite our Work
 
 ```bibtex
 @article{To_Be_Updated,
