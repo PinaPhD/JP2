@@ -14,7 +14,7 @@
 `KEYWORDS: IoT-Edge, SDN, NFV, IEEE802.1 TSN, IEC61850, vPAC, HCTMM, offshore wind, dependability`
 
 
-<img src="https://github.com/PinaPhD/JP2/blob/main/main.jpg" width="800" height="500">
+<img src="https://github.com/PinaPhD/JP2/blob/main/main.jpg" width="800" height="300">
 
 
 ---
