@@ -6,27 +6,12 @@
 
 #### ABSTRACT
 
-Offshore wind farms are increasingly adopting
-vendor-agnostic software-defined networking (SDN) to oversee
-their IoT-Edge networks. Given the challenging offshore context,
-it is essential to ensure consistent data exchange in the proposed
-SDN-enabled IoT-Edge networks, despite stochastic failures such
-as random component malfunction, software glitches, fluctuating
-resource usage, and inconsistent network traffic. This paper
-demonstrates how these failures occurring in both the control and
-data planes result in intermittent network service disruptions.
-Further, the paper proposes an effective recoverability and
-maintainability strategy and evaluates the proposed network’s
-steady-state behavior using a probabilistic Homogeneous Con-
-tinuous Time Markov Model (HCTMM). The HCTMM, tested
-across 15 scenarios with varied failure-repair rates, shows system
-availability, A ≥ 93.0%, for scenarios specific to the control plane
-and A ≥ 99.35% for data plane cases which tends to the industry
-service level agreement for system availability set at A = 99.999%
-(5 nines). Moreover,
+> Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their IoT-Edge networks.
+> Inevitably, these SDN-enabled IoT-Edge networks encounter stochastic failures such as random component malfunction, software glitches, fluctuating resource usage, and sudden, unpredictable spikes in network traffic. These stochastic failures cause intermittent network service interruptions, disrupting the real-time exchange of critical, delay-sensitive data, essential for offshore wind farm operations.
+> A proof-of-concept simulation testbed is developed to assess the transient behavior of the proposed network amid stochastic failure. This paper proposes an effective detection, migration, recoverability, and maintainability strategy for self-healing. To assess the steady-state behavior, a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) was evaluated under variable failure and repair conditions. 
+>The HCTMM, tested across 15 scenarios with varied failure-repair rates, shows system availability, $\mathcal{A} \geq 93.0\%$, for scenarios specific to the control plane and $\mathcal{A} \geq 99.35\%$ for data plane cases which tends to the industry service level agreement for system availability set at $\mathcal{A} = 99.999\%$ (5 nines).
 
-- Index Terms—IoT-Edge, SDN, NFV, TSN, IEC61850, vPAC,
-HCTMM, offshore wind, dependability.
+>IoT-Edge, SDN, NFV, IEEE802.1 TSN, IEC61850, vPAC, HCTMM, offshore wind, dependability
 
 <img src="https://github.com/PinaPhD/JP2/blob/main/ReadMe_Logical.png" width="800" height="500">
 
