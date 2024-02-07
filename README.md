@@ -6,9 +6,10 @@
 
 #### ABSTRACT
 
-> Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their IoT-Edge networks.
-> Inevitably, these SDN-enabled IoT-Edge networks encounter stochastic failures such as random component malfunction, software glitches, fluctuating resource usage, and sudden, unpredictable spikes in network traffic. These stochastic failures cause intermittent network service interruptions, disrupting the real-time exchange of critical, delay-sensitive data, essential for offshore wind farm operations.
-> A proof-of-concept simulation testbed is developed to assess the transient behavior of the proposed network amid stochastic failure. This paper proposes an effective detection, migration, recoverability, and maintainability strategy for self-healing. To assess the steady-state behavior, a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) was evaluated under variable failure and repair conditions. 
+>Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their IIoT-Edge networks. 
+>Inevitably, the SDN-enabled IIoT-Edge networks encounter stochastic failures such as random component malfunctions, software glitches, and fluctuating resource usage.These stochastic failures can result in intermittent network service interruptions, disrupting the real-time exchange of critical, latency-sensitive data that is essential for offshore wind farm operations.
+>This paper designs a model abstraction that maps the stochastic failures at the control and data plane to an effective strategy that uses a monitoring agent to detect, recover, and maintain the network model to restore it to a fully operational state upon failure.
+>A two-pronged approach is used to investigate the dependability of the proposed network model by assessing: (i) the transient behavior using a proof-of-concept simulation testbed and (ii) the steady-state behavior using a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) under varying failure and repair conditions. 
 >The HCTMM, tested across 15 scenarios with varied failure-repair rates, shows system availability, $\mathcal{A} \geq 93.0\%$, for scenarios specific to the control plane and $\mathcal{A} \geq 99.35\%$ for data plane cases which tends to the industry service level agreement for system availability set at $\mathcal{A} = 99.999\%$ (5 nines).
 
 > Keywords: `IoT-Edge, SDN, NFV, IEEE802.1 TSN, IEC61850, vPAC, HCTMM, offshore wind, dependability`
