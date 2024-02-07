@@ -20,13 +20,6 @@
 
 ---
 
-##### Part 1: Probabilistic quantitative HCTMC system model
-[HCTMC Model](https://github.com/PinaPhD/JP2/blob/main/HCTMC_MODEL/)
-
-
-##### Part 2: Proof-of-concept simulation testbed
-
-[Proof Of Concept Simulation Testbed](https://github.com/PinaPhD/JP2/tree/main/POC/)
 
 ##### Cite our Work
 
