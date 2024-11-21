@@ -3,22 +3,63 @@
 ### Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms
 
 ---
-
-#### ABSTRACT
-
->Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their IIoT-Edge networks. 
->Inevitably, the SDN-enabled IIoT-Edge networks encounter stochastic failures such as random component malfunctions, software glitches, and fluctuating resource usage.These stochastic failures can result in intermittent network service interruptions, disrupting the real-time exchange of critical, latency-sensitive data that is essential for offshore wind farm operations.
->This paper designs a model abstraction that maps the stochastic failures at the control and data plane to an effective strategy that uses a monitoring agent to detect, recover, and maintain the network model to restore it to a fully operational state upon failure.
->A two-pronged approach is used to investigate the dependability of the proposed network model by assessing: (i) the transient behavior using a proof-of-concept simulation testbed and (ii) the steady-state behavior using a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) under varying failure and repair conditions. 
->The HCTMM, tested across 15 scenarios with varied failure-repair rates, shows system availability, $\mathcal{A} \geq 93.0\%$, for scenarios specific to the control plane and $\mathcal{A} \geq 99.35\%$ for data plane cases which tends to the industry service level agreement for system availability set at $\mathcal{A} = 99.999\%$ (5 nines).
-
-> Keywords: `IoT-Edge, SDN, NFV, IEEE802.1 TSN, IEC61850, vPAC, HCTMM, offshore wind, dependability`
-
-
 <img src="https://github.com/PinaPhD/JP2/blob/main/FrontPage.png" >
+---
+
+
+## Contributors
+
+1. Agrippina Mwangi (SDN/NFV Solutions Architect and Researcher) - [ResearchGate Profile](https://www.researchgate.net/profile/Agrippina-Mwangi)
+2. Nadine Kabbara (IEC61850/vPAC Expert and Researcher) - [ResearchGate Profile](https://www.researchgate.net/profile/Nadine-Kabbara)
+
+
+## Table of Contents
+1. [Executive Summary](#summary)
+2. [Pre-requisites](#requirements)
+3. [Data Plane](#data-plane)
+4. [Control Plane](#control-plane)
+5. [Dependability Assessment](#Dependability-Assessment)
+6. [Cite our Work](#cite-our-work)
+
+
+
+## Executive Summary
+> Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their Industrial Internet of Things Edge (IIoT-Edge) networks. The SDN-enabled IIoT-Edge networks present a promising solution for high availability and consistent performance-demanding environments such as offshore wind farm critical infrastructure monitoring, operation, and maintenance. Inevitably, these networks encounter stochastic failures such as random component malfunctions, software malfunctions, CPU overconsumption, and memory leakages. These stochastic failures result in intermittent network service interruptions, disrupting the real-time exchange of critical, latency-sensitive data essential for offshore wind farm operations. Given the criticality of data transfer in offshore wind farms, this paper investigates the dependability of the SDN-enabled IIoT-Edge networks amid the highlighted stochastic failures using a two-pronged approach to: (i) observe the transient behavior using a proof-of-concept simulation testbed and (ii) quantitatively assess the steady-state behavior using a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) under varying failure and repair conditions. The study finds that network throughput decreases during failures in the transient behavior analysis. After quantitatively analyzing 15 case scenarios with varying failure and repair combinations, steady-state availability ranged from 93\% to 98\%, nearing the industry-standard SLA of 99.999\%, guaranteeing up to 3 years of uninterrupted network service.
+
+
+
+## Requirements
+
+1. On a physical server, create several Linux-GUI x64 virtual machines using KVM virtual machine manager using the following storage and compute specifications:
+    - Linux Ubuntu server 22.04 lts-Gen2 x64, 2 vCPUs (16GiB RAM), 128-512GB SSD/HDD
+    - Docker ver. 24.0.7
+    - Mininet Ver. 2.3.0
+    - InfluxdB Ver.2.7.10
+    - Python Ver.3.12.3
+2.     
+    
+
+## Data Plane
+- On one of the VMs with Mininet Installation run the [network topology](https://github.com/PinaPhD/JP2/blob/main/Dependability_Assessment/Topology/network_topology.py) for an offshore wind farm as illustrated in the homepage figure (reduce model with 20 WTGs communicating with one OSS).
+- At the Mininet prompt, run xterm on select mininet hosts to initialize traffic generation using the following data sets:
+    - [MQTT sensor data traffic](https://github.com/PinaPhD/A-threshold-triggered-DQN-self-healing-framework/tree/main/DataPlane/IIoT_ECP_Socket)
+    - [IEC61850 SV/GOOSE docker based data traffic](https://github.com/PinaPhD/JP2/tree/main/Dependability_Assessment/vPAC_Node)
+
+- To monitor network performance, use the [iperf3](https://iperf.fr/) tool for active measurements of network latency, throughput, jitter, packet loss (loss of datagrams).
+
+
+## Control Plane
+
+
+## Dependability Assessment
+
+
+
+
 
 
 ---
+
 
 
 ##### Cite our Work
