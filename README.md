@@ -10,12 +10,12 @@
 ## Contributors
 
 1. Agrippina Mwangi (SDN/NFV Solutions Architect and Researcher) - [ResearchGate Profile](https://www.researchgate.net/profile/Agrippina-Mwangi)
-2. Nadine Kabbara (IEC61850/vPAC Expert and Researcher) - [ResearchGate Profile](https://www.researchgate.net/profile/Nadine-Kabbara)
+2. Nadine Kabbara (IEC61850/vPAC Researcher) - [ResearchGate Profile](https://www.researchgate.net/profile/Nadine-Kabbara)
 
 
 ## Table of Contents
 1. [Executive Summary](#executive-summary)
-2. [Pre-requisites](#requirements)
+2. [Testbed Design](#Testbed-Design)
 3. [Data Plane](#data-plane)
 4. [Control Plane](#control-plane)
 5. [Dependability Assessment](#Dependability-Assessment)
@@ -28,7 +28,7 @@
 
 
 
-## Requirements
+## Testbed Design
 
 1. On a physical server, create several Linux-GUI x64 virtual machines using KVM virtual machine manager using the following storage and compute specifications:
     - Linux Ubuntu server 22.04 lts-Gen2 x64, 2 vCPUs (16GiB RAM), 128-512GB SSD/HDD
