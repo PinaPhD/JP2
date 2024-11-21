@@ -3,10 +3,8 @@
 ## Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms
 
 
-
----
 <img src="https://github.com/PinaPhD/JP2/blob/main/FrontPage.png" >
----
+
 
 
 ## Contributors
