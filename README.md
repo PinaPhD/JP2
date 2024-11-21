@@ -32,6 +32,7 @@
 
 1. On a physical server, create several Linux-GUI x64 virtual machines using KVM virtual machine manager using the following storage and compute specifications:
     - Linux Ubuntu server 22.04 lts-Gen2 x64, 2 vCPUs (16GiB RAM), 128-512GB SSD/HDD
+2. Install the following software in the respective virtual machines use guidelines in Table V in this document's [methodology section](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10677450) :
     - Docker ver. 24.0.7
     - Mininet Ver. 2.3.0
     - InfluxdB Ver.2.7.10
