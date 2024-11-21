@@ -67,14 +67,61 @@
 ##### Cite our Work
 
 ```bibtex
-@article{To_Be_Updated,
-  title={Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms},
-  author={Mwangi et al., },
-  journal={IEEE Transactions of Network and Service Management - Submitted},
+@ARTICLE{mwangi2024tnsm,
+  author={Mwangi, Agrippina and Kabbara, Nadine and Coudray, Patrick and Gryning, Mikkel and Gibescu, Madeleine},
+  journal={IEEE Transactions on Network and Service Management}, 
+  title={Investigating the Dependability of Software-Defined IIoT-Edge Networks for Next-Generation Offshore Wind Farms}, 
   year={2024},
-  ...
+  volume={5},
+  number={6},
+  pages={1-14},
+  keywords={Wind farms;Sensors;Stochastic processes;Industrial Internet of Things;Wind turbines;Servers;Probabilistic logic;Industrial IoT;software-defined networking;edge computing;IEEE802.1 Time Sensitive Networking;IEC61850;vPAC;Homogeneous CTMM;offshore wind;dependability},
+  doi={10.1109/TNSM.2024.3458447}
+  }
+```
+
+
+```bibtex
+@Article{mwangi2024en,
+AUTHOR = {Mwangi, Agrippina and Sahay, Rishikesh and Fumagalli, Elena and Gryning, Mikkel and Gibescu, Madeleine},
+TITLE = {Towards a Software-Defined Industrial IoT-Edge Network for Next-Generation Offshore Wind Farms: State of the Art, Resilience, and Self-X Network and Service Management},
+JOURNAL = {Energies},
+VOLUME = {17},
+YEAR = {2024},
+NUMBER = {12},
+ARTICLE-NUMBER = {2897},
+URL = {https://www.mdpi.com/1996-1073/17/12/2897},
+ISSN = {1996-1073},
+DOI = {10.3390/en17122897}
 }
 ```
+
+
+```bibtex
+@ARTICLE{kabbara2024ojia,
+  author={Kabbara, Nadine and Mwangi, Agrippina and Ştefanov, Alexandru and Gibescu, Madeleine},
+  journal={IEEE Open Journal of Industry Applications}, 
+  title={A Real-Time Implementation and Testing of Virtualized Controllers for Software-Defined IEC 61850 Digital Substations}, 
+  year={2024},
+  volume={5},
+  number={},
+  pages={300-310},
+  keywords={Substations;IEC Standards;Virtualization;Real-time systems;Communication networks;Protection;Power systems;Cyber-physical power systems;digital substations;IEC 61850;software-defined network (SDN);virtual intelligent electronic devices (IED);virtualization},
+  doi={10.1109/OJIA.2024.3426321}}
+```
+
+
+```bibtex
+@inproceedings{mwangi2023building,
+  title={Building Resilience for SDN-Enabled IoT Networks in Offshore Renewable Energy Supply},
+  author={Mwangi, Agrippina and Fumagalli, Elena and Gryning, Mikkel and Gibescu, Madeleine},
+  booktitle={2023 IEEE 9th World Forum on Internet of Things (WF-IoT)},
+  pages={1--2},
+  year={2023},
+  organization={IEEE}
+}
+```
+
 
 ```bibtex
 @inproceedings{mwangi2023system,
@@ -85,14 +132,5 @@
   year={2023},
   organization={IEEE}
 }
-
-@inproceedings{kabbara2023specifications,
-  title={Specifications of a Simulation Framework for Virtualized Intelligent Electronic Devices in Smart Grids Covering Networking and Security Requirements},
-  author={Kabbara, Nadine and Mwangi, Agrippina and Gibescu, Madeleine and Abedi, Ali and Stefanov, Alexandru and Palensky, Peter},
-  booktitle={2023 IEEE Belgrade PowerTech},
-  pages={1--6},
-  year={2023},
-  organization={IEEE}
-}
-
 ```
+
