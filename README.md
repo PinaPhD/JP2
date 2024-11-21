@@ -2,6 +2,8 @@
 
 ### Investigating the dependability of SDN-enabled IoT-Edge networks for next-generation offshore wind farms
 
+
+
 ---
 <img src="https://github.com/PinaPhD/JP2/blob/main/FrontPage.png" >
 ---
@@ -24,7 +26,7 @@
 
 
 ## Executive Summary
-> Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their Industrial Internet of Things Edge (IIoT-Edge) networks. The SDN-enabled IIoT-Edge networks present a promising solution for high availability and consistent performance-demanding environments such as offshore wind farm critical infrastructure monitoring, operation, and maintenance. Inevitably, these networks encounter stochastic failures such as random component malfunctions, software malfunctions, CPU overconsumption, and memory leakages. These stochastic failures result in intermittent network service interruptions, disrupting the real-time exchange of critical, latency-sensitive data essential for offshore wind farm operations. Given the criticality of data transfer in offshore wind farms, this paper investigates the dependability of the SDN-enabled IIoT-Edge networks amid the highlighted stochastic failures using a two-pronged approach to: (i) observe the transient behavior using a proof-of-concept simulation testbed and (ii) quantitatively assess the steady-state behavior using a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) under varying failure and repair conditions. The study finds that network throughput decreases during failures in the transient behavior analysis. After quantitatively analyzing 15 case scenarios with varying failure and repair combinations, steady-state availability ranged from 93\% to 98\%, nearing the industry-standard SLA of 99.999\%, guaranteeing up to 3 years of uninterrupted network service.
+> Next-generation offshore wind farms are increasingly adopting vendor-agnostic software-defined networking (SDN) to oversee their Industrial Internet of Things Edge (IIoT-Edge) networks. The SDN-enabled IIoT-Edge networks present a promising solution for high availability and consistent performance-demanding environments such as offshore wind farm critical infrastructure monitoring, operation, and maintenance. Inevitably, these networks encounter stochastic failures such as random component malfunctions, software malfunctions, CPU overconsumption, and memory leakages. These stochastic failures result in intermittent network service interruptions, disrupting the real-time exchange of critical, latency-sensitive data essential for offshore wind farm operations. Given the criticality of data transfer in offshore wind farms, this paper investigates the dependability of the SDN-enabled IIoT-Edge networks amid the highlighted stochastic failures using a two-pronged approach to: (i) observe the transient behavior using a proof-of-concept simulation testbed and (ii) quantitatively assess the steady-state behavior using a probabilistic Homogeneous Continuous Time Markov Model (HCTMM) under varying failure and repair conditions. The study finds that network throughput decreases during failures in the transient behavior analysis. After quantitatively analyzing 15 case scenarios with varying failure and repair combinations, steady-state availability ranged from 93% to 98%, nearing the industry-standard SLA of 99.999%, guaranteeing up to 3 years of uninterrupted network service.
 
 
 
@@ -36,7 +38,7 @@
     - Mininet Ver. 2.3.0
     - InfluxdB Ver.2.7.10
     - Python Ver.3.12.3
-2.     
+
     
 
 ## Data Plane
